@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-
+// is my namespace correct?
 namespace obj.Tile
 {
     public class Tile
