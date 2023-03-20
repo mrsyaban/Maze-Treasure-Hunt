@@ -5,20 +5,25 @@ using Utility = UtilitySpace.Matrix;
 namespace tspSpace{
     public class tspBfs : bfs {
         private Tile home;
+        
         public tspBfs(string[,] matrix) : base(matrix) {
             home = start;
             // Do nothing
         }
+
         public void setHome(Tile home){
             this.home = home;
         }
+
         public Tile getHome(){
             return home;
         }
+
         public void backtoHome(){
            this.treasure.Add(home);
            this.BFS();
         }
+
         public void startTsp(){
             this.startfind();
             this.backtoHome();
