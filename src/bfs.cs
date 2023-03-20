@@ -31,7 +31,7 @@ namespace bfsSpace{
                         }else if(matrix[i,j] == "T"){
                             treasure.Add(tile);
                         }else{
-                            /* Do nothing */X500DistinguishedName
+                            /* Do nothing */
                         }
                     }
                 }
