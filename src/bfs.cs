@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using TileSpace;
 using UtilitySpace;
 
@@ -32,7 +33,7 @@ namespace bfsSpace{
                         }else if(matrix[i,j] == "T"){
                             treasure.Add(tile);
                         }else{
-                            /* Do nothing */
+                            /* Do nothing */X500DistinguishedName
                         }
                     }
                 }

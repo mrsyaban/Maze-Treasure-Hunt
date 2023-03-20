@@ -24,18 +24,7 @@ namespace UtilitySpace
             return matrix;
         }
 
-        public void parserFile(string path){
-            string[] lines = System.IO.File.ReadAllLines(path);
-            int row = lines.Length;
-            int col = lines[0].Split(' ').Length;
-            matrix = new string[row,col];
-            for(int i = 0; i < row; i++){
-                string[] line = lines[i].Split(' ');
-                for(int j = 0; j < col; j++){
-                    matrix[i,j] = line[j];
-                }
-            }
-        }
+
 
         public void printMatrix(){
 
@@ -61,10 +50,12 @@ namespace UtilitySpace
     public class Tiles
     {
         private List<Tile> tiles;
+        private string[,] matrix;
         
         /* constructor */
         public Tiles() {
             tiles = new List<Tile>();
+            matrix = null;
         }
 
         /* Getter */
@@ -72,9 +63,70 @@ namespace UtilitySpace
             return tiles[i];
         }
 
+        public string[,] getMatrix()
+        {
+            return matrix;
+        }
+
+        public string getMatrix(int i, int j)
+        {
+            return matrix[i,j];
+        }
+
         /* Setter */
         public void addTile(Tile tile) { 
             tiles.Add(tile);
+        }
+
+        public void parserFile(string path)
+        {
+            string[] lines = System.IO.File.ReadAllLines(path);
+            int row = lines.Length;
+            int col = lines[0].Split(' ').Length;
+            matrix = new string[row, col];
+            for (int i = 0; i < row; i++)
+            {
+                string[] line = lines[i].Split(' ');
+                for (int j = 0; j < col; j++)
+                {
+                    matrix[i, j] = line[j];
+                }
+            }
+        }
+
+        public void setAdjacency()
+        {
+            foreach (Tile tile in tiles)
+            {
+                int[] coor = tile.getCoordinate();
+                int x = coor[0];
+                int y = coor[1];
+                foreach (Tile t in tiles)
+                {
+                    int x2 = t.getCoordinate(0);
+                    int y2 = t.getCoordinate(1);
+                    if (x2 == x + 1 && y2 == y)
+                    {
+                        tile.setDown(t);
+                    }
+                    else if (x2 == x && y2 == y + 1)
+                    {
+                        tile.setRight(t);
+                    }
+                    else if (x2 == x - 1 && y2 == y)
+                    {
+                        tile.setUp(t);
+                    }
+                    else if (x2 == x && y2 == y - 1)
+                    {
+                        tile.setLeft(t);
+                    }
+                    else
+                    {
+                        /* Do nothing */
+                    }
+                }
+            }
         }
     }
 }

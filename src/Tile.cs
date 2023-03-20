@@ -54,8 +54,8 @@ namespace TileSpace
             return path;
         }
 
-        public int[] getCoordinate(){
-            return coordinate;
+        public int getCoordinate(int i){
+            return coordinate[i];
         }
         public Tile getDown(){
             return Down;
