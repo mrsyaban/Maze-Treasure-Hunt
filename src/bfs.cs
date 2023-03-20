@@ -55,12 +55,10 @@ namespace bfsSpace{
                 if(treasure.Contains(tile)){
                     List<Tuple<string,int,int>> path = tile.getPath();
                     treasure.Remove(tile);
-                    if(treasure.Count != 0){
-                        this.appendPath(path);
-                    }else{
+                    if(treasure.Count == 0){
                         path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
-                        this.appendPath(path);
                     }
+                    this.appendPath(path);
                     this.refresh();
                     this.setStart(tile);
                     break;         

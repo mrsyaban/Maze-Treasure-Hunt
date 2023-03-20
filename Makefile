@@ -8,6 +8,7 @@ else
 	FLAGS =	
 	DEL = del
 	SLASH = \
+	
 endif
 
 # Build instructions
