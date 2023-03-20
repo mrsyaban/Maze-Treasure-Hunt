@@ -69,6 +69,28 @@ namespace TileSpace
             }
         }
 
+        public void setValue(string val){
+            value = val;
+        }
+
+        public void setDown(TileClass tile){
+            Down = tile;
+        }
+
+        public void setRight(TileClass tile){
+            Right = tile;
+        }
+
+        public void setUp(TileClass tile){
+            Up = tile;
+        }
+
+        public void setLeft(TileClass tile){
+            Left = tile;
+        }
+
+        /* Method lainnya */
+
         public void hasVisited(){
             visited = true;
         }
@@ -80,24 +102,6 @@ namespace TileSpace
             }
             this.path.Add(new Tuple<string, int, int>(direction, tile.getCoordinate()[0], tile.getCoordinate()[1]));
         }
-        public void setValue(string val){
-            value = val;
-        }
-        public void setDown(TileClass tile){
-            Down = tile;
-        }
-        public void setRight(TileClass tile){
-            Right = tile;
-        }
-        public void setUp(TileClass tile){
-            Up = tile;
-        }
-        public void setLeft(TileClass tile){
-            Left = tile;
-        }
-
-
-        /* Utility Function */
 
         public void printInfo(){
             Console.WriteLine("Coordinate: " + coordinate[0] + "," + coordinate[1]);
@@ -127,8 +131,5 @@ namespace TileSpace
             visited = false;
             path = new List<Tuple<string, int, int>>();
         }
-
-
-
     }
 }

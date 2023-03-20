@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using Tile = TileSpace.TileClass;
 using Utility = UtilitySpace.Matrix;
 
-namespace bfs{
-    class bfs{
-        private List<Tile> tiles;
-        private Queue<Tile> queue;
-        private Tile start;
-        private List<Tile> treasure;
-        private List<Tuple<string, int, int>> path;
+namespace bfsSpace{
+    public class bfsClass{
+        protected List<Tile> tiles;
+        protected Queue<Tile> queue;
+        protected Tile start;
+        protected List<Tile> treasure;
+        protected List<Tuple<string, int, int>> path;
 
-        public bfs(string[,] matrix){
+        public bfsClass(string[,] matrix){
             tiles = new List<Tile>();
             queue = new Queue<Tile>();
             treasure = new List<Tile>();
@@ -175,15 +175,15 @@ namespace bfs{
             }
         }
 
-        public static void Main(string[] args){
-            Utility utility = new Utility();
-            utility.parserFile("../test/input.txt");
-            utility.printMatrix();
+        // public static void Main(string[] args){
 
-            bfs BFS = new bfs(utility.getMatrix());
-            BFS.startfind();
-            BFS.printStep();
-        }
+        //     Utility utility = new Utility();
+        //     utility.parserFile("../test/input.txt");
+        //     utility.printMatrix();
+
+        //     bfsClass BFS = new bfsClass(utility.getMatrix());
+        //     BFS.startfind();
+        //     BFS.printStep();
+        // }
     }
-
 }
