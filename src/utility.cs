@@ -4,73 +4,31 @@ using TileSpace;
 
 namespace UtilitySpace
 {
-    public class Matrix
-    {
-        private string[,] matrix;
-
-        public Matrix(){
-            matrix = null;
-        }
-
-        public Matrix(string[,] matrix){
-            this.matrix = matrix;
-        }
-
-        public void setMatrix(string[,] matrix){
-            this.matrix = matrix;
-        }
-
-        public string[,] getMatrix(){
-            return matrix;
-        }
-
-
-
-        public void printMatrix(){
-
-            int rows = matrix.GetLength(0);
-            int cols = matrix.GetLength(1);
-            
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    Console.Write(matrix[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
-        }
-
-        // public static void Main(string[] args){
-        //     Utility utility = new Utility();
-        //     utility.parserFile("../test/input.txt");
-        //     utility.printMatrix();
-
-        // }
-    }
-
     public class Tiles
     {
         private List<Tile> tiles;
-        private string[,] matrix;
+        private Tile start;
+        private List<Tile> treasure;
+
         
         /* constructor */
         public Tiles() {
             tiles = new List<Tile>();
-            matrix = null;
+            treasure = new List<Tile>();
+            start = null;
         }
 
         /* Getter */
-        Tile getTile(int i) { 
-            return tiles[i];
+        public List<Tile> getTiles() { 
+            return tiles;
         }
 
-        public string[,] getMatrix()
-        {
-            return matrix;
+        public List<Tile> getTreasure(){
+            return treasure;
         }
 
-        public string getMatrix(int i, int j)
-        {
-            return matrix[i,j];
+        public Tile getStart(){
+            return start;
         }
 
         /* Setter */
@@ -83,7 +41,7 @@ namespace UtilitySpace
             string[] lines = System.IO.File.ReadAllLines(path);
             int row = lines.Length;
             int col = lines[0].Split(' ').Length;
-            matrix = new string[row, col];
+            string[,] matrix = new string[row, col];
             for (int i = 0; i < row; i++)
             {
                 string[] line = lines[i].Split(' ');
@@ -92,15 +50,57 @@ namespace UtilitySpace
                     matrix[i, j] = line[j];
                 }
             }
+            convMatrix(matrix);
+            setAdjacency();
+
         }
 
+        public void convMatrix(string[,] matrix){
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+            for(int i = 0; i < rows; i++){
+                for(int j = 0; j < cols; j++){
+                    if(matrix[i,j] != "X"){
+                        Tile tile = new Tile(matrix[i,j], i, j);
+                        tiles.Add(tile);
+                        if(matrix[i,j] == "K"){
+                            start = tile;
+                        }else if(matrix[i,j] == "T"){
+                            treasure.Add(tile);
+                        }else{
+                            /* Do nothing */
+                        }
+                    }
+                }
+            }   
+        }
+
+        public void printTile(){
+            foreach(Tile tile in tiles){
+                Console.WriteLine("Coordinate: " + tile.getCoordinate(0) + "," + tile.getCoordinate(1));
+                Console.WriteLine("Value: " + tile.getValue());
+                if(tile.getDown() != null){
+                    Console.WriteLine("Down: " + tile.getDown().getCoordinate(0) + "," + tile.getDown().getCoordinate(1));
+                }
+                if(tile.getRight() != null){
+                    Console.WriteLine("Right: " + tile.getRight().getCoordinate(0) + "," + tile.getRight().getCoordinate(1));
+                }
+                if(tile.getUp() != null){
+                    Console.WriteLine("Up: " + tile.getUp().getCoordinate(0) + "," + tile.getUp().getCoordinate(1));
+                }
+                if(tile.getLeft() != null){
+                    Console.WriteLine("Left: " + tile.getLeft().getCoordinate(0) + "," + tile.getLeft().getCoordinate(1));
+                }
+                Console.WriteLine();
+            }
+        }
         public void setAdjacency()
         {
             foreach (Tile tile in tiles)
             {
-                int[] coor = tile.getCoordinate();
-                int x = coor[0];
-                int y = coor[1];
+                int x = tile.getCoordinate(0);
+                int y = tile.getCoordinate(1);
                 foreach (Tile t in tiles)
                 {
                     int x2 = t.getCoordinate(0);

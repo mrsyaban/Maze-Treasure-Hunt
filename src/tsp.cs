@@ -1,12 +1,12 @@
-using bfs = bfsSpace.bfsClass;
-using Tile = TileSpace.TileClass;
-using Utility = UtilitySpace.Matrix;
+using bfsSpace;
+using TileSpace;
+using UtilitySpace;
 
 namespace tspSpace{
-    public class tspBfs : bfs {
+    public class tsp : bfs {
         private Tile home;
-        
-        public tspBfs(string[,] matrix) : base(matrix) {
+
+        public tsp(Tiles tiles) : base(tiles) {
             home = start;
             // Do nothing
         }
@@ -29,14 +29,14 @@ namespace tspSpace{
             this.backtoHome();
         }
 
-        public static void Main(string[] args){
-            Utility utility = new Utility();
-            utility.parserFile("../test/input.txt");
-            utility.printMatrix();
-            tspBfs tspBfs = new tspBfs(utility.getMatrix());
-            tspBfs.startTsp();
-            tspBfs.printStep();
-        }
+        // public static void Main(string[] args){
+        //     Tiles tiles = new Tiles();
+        //     tiles.parserFile("test/input.txt");
+        //     tsp tsp = new tsp(tiles);
+        //     tsp.startTsp();
+        //     tsp.printStep();
+
+        // }
 
     }
 }

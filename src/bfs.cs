@@ -5,82 +5,21 @@ using TileSpace;
 using UtilitySpace;
 
 namespace bfsSpace{
-    public class bfsClass{
+    public class bfs{
         protected List<Tile> tiles;
         protected Queue<Tile> queue;
         protected Tile start;
         protected List<Tile> treasure;
         protected List<Tuple<string, int, int>> path;
 
-        public bfsClass(string[,] matrix){
-            tiles = new List<Tile>();
+        public bfs(Tiles input){
             queue = new Queue<Tile>();
-            treasure = new List<Tile>();
             path = new List<Tuple<string, int, int>>();
-
-            int rows = matrix.GetLength(0);
-            int cols = matrix.GetLength(1);
-
-            for(int i = 0; i < rows; i++){
-                for(int j = 0; j < cols; j++){
-                    if(matrix[i,j] != "X"){
-                        Tile tile = new Tile(matrix[i,j], i, j);
-                        tiles.Add(tile);
-                        if(matrix[i,j] == "K"){
-                            start = tile;
-                        }else if(matrix[i,j] == "T"){
-                            treasure.Add(tile);
-                        }else{
-                            /* Do nothing */X500DistinguishedName
-                        }
-                    }
-                }
-            }   
+            tiles = input.getTiles();
+            treasure = input.getTreasure();
+            start = input.getStart();
         }
 
-        public void setTile(){
-            foreach(Tile tile in tiles){
-                int[] coor = tile.getCoordinate();
-                int x = coor[0];
-                int y = coor[1];
-                foreach(Tile t in tiles){
-                    int[] coor2 = t.getCoordinate();
-                    int x2 = coor2[0];
-                    int y2 = coor2[1];
-                    if(x2 == x+1 && y2 == y){
-                        tile.setDown(t);
-                    }else if(x2 == x && y2 == y+1){
-                        tile.setRight(t);
-                    }else if(x2 == x-1 && y2 == y){
-                        tile.setUp(t);
-                    }else if(x2 == x && y2 == y-1){
-                        tile.setLeft(t);
-                    }else{
-                        /* Do nothing */
-                    }
-                }
-            }
-        }
-
-        public void printTile(){
-            foreach(Tile tile in tiles){
-                Console.WriteLine("Coordinate: " + tile.getCoordinate()[0] + "," + tile.getCoordinate()[1]);
-                Console.WriteLine("Value: " + tile.getValue());
-                if(tile.getDown() != null){
-                    Console.WriteLine("Down: " + tile.getDown().getCoordinate()[0] + "," + tile.getDown().getCoordinate()[1]);
-                }
-                if(tile.getRight() != null){
-                    Console.WriteLine("Right: " + tile.getRight().getCoordinate()[0] + "," + tile.getRight().getCoordinate()[1]);
-                }
-                if(tile.getUp() != null){
-                    Console.WriteLine("Up: " + tile.getUp().getCoordinate()[0] + "," + tile.getUp().getCoordinate()[1]);
-                }
-                if(tile.getLeft() != null){
-                    Console.WriteLine("Left: " + tile.getLeft().getCoordinate()[0] + "," + tile.getLeft().getCoordinate()[1]);
-                }
-                Console.WriteLine();
-            }
-        }
 
         public int getTreasureCount(){
             return treasure.Count;
@@ -119,7 +58,7 @@ namespace bfsSpace{
                     if(treasure.Count != 0){
                         this.appendPath(path);
                     }else{
-                        path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate()[0], tile.getCoordinate()[1]));
+                        path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
                         this.appendPath(path);
                     }
                     this.refresh();
@@ -160,7 +99,6 @@ namespace bfsSpace{
         }
 
         public void startfind(){
-            this.setTile();
             int count = this.getTreasureCount();
             for(int i = 0; i < count; i++){
                 this.BFS();
@@ -176,11 +114,9 @@ namespace bfsSpace{
 
         public static void Main(string[] args){
 
-            Matrix utility = new Matrix();
-            utility.parserFile("test/input.txt");
-            utility.printMatrix();
-
-            bfsClass BFS = new bfsClass(utility.getMatrix());
+            Tiles tiles = new Tiles();
+            tiles.parserFile("test/input.txt");
+            bfs BFS = new bfs(tiles);
             BFS.startfind();
             BFS.printStep();
         }
