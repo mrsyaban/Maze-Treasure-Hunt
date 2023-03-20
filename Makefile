@@ -2,11 +2,9 @@
 ifeq ($(shell uname), Darwin)
     # macOS build instructions
 	FLAGS = mono
-else ifeq ($(OS), Windows_NT)
+else
     # Windows build instructions
 	FLAGS = 
-else
-    $(error Unsupported operating system)
 endif
 
 # Build instructions
@@ -23,7 +21,7 @@ main:
 	csc /out:bin/Main.exe src/Main.cs src/Bfs.cs src/dfs.cs src/tsp.cs src/Utility.cs src/Tile.cs
 
 run:
-	$(FLAGS) bin/*.exe
+	$(FLAGS) ./bin/DFS.exe
 
 clean:
 	rm bin/*.exe

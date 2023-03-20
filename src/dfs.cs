@@ -8,43 +8,18 @@ namespace DfsSpace
 {
     class DfsClass
     {
+        protected List<Tile> tiles;
         protected Stack<Tile> stack;
         protected List<Tile> treasure;
         protected List<Tuple<string, int, int>> path;
         protected Tile start;
 
-        public DfsClass(Tiles tiles) {
-            queue = new Queue<Tile>();
-            treasure = new List<Tile>();
+        public DfsClass(Tiles input) {
+            stack = new Stack<Tile>();
             path = new List<Tuple<string, int, int>>();
-                
-            int rows = tiles.getMatrix().GetLength(0);
-            int cols = tiles.getMatrix().GetLength(1);
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    if (tiles.getMatrix(i,j) != "X")
-                    {
-                        Tile tile = new Tile(tiles.getMatrix(i, j), i, j);
-                        tiles.addTile(tile);
-
-                        if (tiles.matrix[i, j] == "K")
-                        {
-                            start = tile;
-                        }
-                        else if (tiles.matrix[i, j] == "T")
-                        {
-                            treasure.Add(tile);
-                        }
-                        else
-                        {
-                            /* Do nothing */
-                        }
-                    }
-                }
-            }
+            tiles = input.getTiles();
+            treasure = input.getTreasure();
+            start = input.getStart();
         }
 
         public void appendPath(List<Tuple<string, int, int>> pathOther)
@@ -94,7 +69,7 @@ namespace DfsSpace
                     }
                     else
                     {
-                        path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate()[0], tile.getCoordinate()[1]));
+                        path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
                         this.appendPath(path);
                     }
                     this.refresh();
@@ -103,22 +78,13 @@ namespace DfsSpace
                 }
                 else
                 {
-                    if (tile.getDown() != null)
+                    if (tile.getLeft() != null)
                     {
-                        if (!tile.getDown().isVisited())
+                        if (!tile.getLeft().isVisited())
                         {
-                            stack.Push(tile.getDown());
-                            tile.getDown().hasVisited();
-                            tile.getDown().addPath(tile, "Down");
-                        }
-                    }
-                    if (tile.getRight() != null)
-                    {
-                        if (!tile.getRight().isVisited())
-                        {
-                            stack.Push(tile.getRight());
-                            tile.getRight().hasVisited();
-                            tile.getRight().addPath(tile, "Right");
+                            stack.Push(tile.getLeft());
+                            tile.getLeft().hasVisited();
+                            tile.getLeft().addPath(tile, "Left");
                         }
                     }
                     if (tile.getUp() != null)
@@ -130,13 +96,22 @@ namespace DfsSpace
                             tile.getUp().addPath(tile, "Up");
                         }
                     }
-                    if (tile.getLeft() != null)
+                    if (tile.getRight() != null)
                     {
-                        if (!tile.getLeft().isVisited())
+                        if (!tile.getRight().isVisited())
                         {
-                            stack.Push(tile.getLeft());
-                            tile.getLeft().hasVisited();
-                            tile.getLeft().addPath(tile, "Left");
+                            stack.Push(tile.getRight());
+                            tile.getRight().hasVisited();
+                            tile.getRight().addPath(tile, "Right");
+                        }
+                    }
+                    if (tile.getDown() != null)
+                    {
+                        if (!tile.getDown().isVisited())
+                        {
+                            stack.Push(tile.getDown());
+                            tile.getDown().hasVisited();
+                            tile.getDown().addPath(tile, "Down");
                         }
                     }
                 }
@@ -146,11 +121,9 @@ namespace DfsSpace
 
         public void startfind()
         {
-            this.setTile();
-            int count = this.getTreasureCount();
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < treasure.Count; i++)
             {
-                this.BFS();
+                this.DFS();
             }
         }
 
@@ -165,13 +138,11 @@ namespace DfsSpace
         public static void Main(string[] args)
         {
 
-            Matrix utility = new Matrix();
-            utility.parserFile("test/input.txt");
-            utility.printMatrix();
-
-            bfsClass BFS = new bfsClass(utility.getMatrix());
-            BFS.startfind();
-            BFS.printStep();
+            Tiles tiles = new Tiles();
+            tiles.parserFile("test/input.txt");
+            DfsClass DFS = new DfsClass(tiles);
+            DFS.startfind();
+            DFS.printStep();
         }
     }
 }
