@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Tile = TileSpace.TileClass;
-using Utility = UtilitySpace.Matrix;
+using TileSpace;
+using UtilitySpace;
 
 namespace bfsSpace{
     public class bfsClass{
@@ -175,15 +175,15 @@ namespace bfsSpace{
             }
         }
 
-        // public static void Main(string[] args){
+        public static void Main(string[] args){
 
-        //     Utility utility = new Utility();
-        //     utility.parserFile("../test/input.txt");
-        //     utility.printMatrix();
+            Matrix utility = new Matrix();
+            utility.parserFile("test/input.txt");
+            utility.printMatrix();
 
-        //     bfsClass BFS = new bfsClass(utility.getMatrix());
-        //     BFS.startfind();
-        //     BFS.printStep();
-        // }
+            bfsClass BFS = new bfsClass(utility.getMatrix());
+            BFS.startfind();
+            BFS.printStep();
+        }
     }
 }

@@ -5,20 +5,34 @@ using System.Collections.Generic;
 
 namespace TileSpace
 {
-    public class TileClass
+    public class Tile
     {
         private int[] coordinate;
         private string value;
         private bool visited;
         private List<Tuple<string, int, int>> path;
-        private TileClass Down;
-        private TileClass Right;
-        private TileClass Up;
-        private TileClass Left;
+        private Tile Down;
+        private Tile Right;
+        private Tile Up;
+        private Tile Left;
         /* Constructor */
-        public TileClass() {
+        public Tile() {
             coordinate = new int[2];
             value = "X";
+            visited = false;
+            path = new List<Tuple<string, int, int>>();
+            Down = null;
+            Right = null;
+            Up = null;
+            Left = null;
+        }
+
+        public Tile(string value, int x, int y)
+        {
+            coordinate = new int[2];
+            coordinate[0] = x; 
+            coordinate[1] = y;
+            this.value = value;
             visited = false;
             path = new List<Tuple<string, int, int>>();
             Down = null;
@@ -43,16 +57,16 @@ namespace TileSpace
         public int[] getCoordinate(){
             return coordinate;
         }
-        public TileClass getDown(){
+        public Tile getDown(){
             return Down;
         }
-        public TileClass getRight(){
+        public Tile getRight(){
             return Right;
         }
-        public TileClass getUp(){
+        public Tile getUp(){
             return Up;
         }
-        public TileClass getLeft(){
+        public Tile getLeft(){
             return Left;
         }
 
@@ -73,19 +87,19 @@ namespace TileSpace
             value = val;
         }
 
-        public void setDown(TileClass tile){
+        public void setDown(Tile tile){
             Down = tile;
         }
 
-        public void setRight(TileClass tile){
+        public void setRight(Tile tile){
             Right = tile;
         }
 
-        public void setUp(TileClass tile){
+        public void setUp(Tile tile){
             Up = tile;
         }
 
-        public void setLeft(TileClass tile){
+        public void setLeft(Tile tile){
             Left = tile;
         }
 
@@ -95,7 +109,7 @@ namespace TileSpace
             visited = true;
         }
 
-        public void addPath(TileClass tile, string direction){
+        public void addPath(Tile tile, string direction){
             List<Tuple<string, int, int>> path = tile.getPath();
             foreach(Tuple<string, int, int> tuple in path){
                 this.path.Add(tuple);

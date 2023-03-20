@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Tile = TileSpace.TileClass;
+using TileSpace;
 
 namespace UtilitySpace
 {
