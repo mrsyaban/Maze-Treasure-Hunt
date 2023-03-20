@@ -80,7 +80,7 @@ namespace TileSpace
             }
             this.path.Add(new Tuple<string, int, int>(direction, tile.getCoordinate()[0], tile.getCoordinate()[1]));
         }
-        public void setValue(char val){
+        public void setValue(string val){
             value = val;
         }
         public void setDown(TileClass tile){

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Tile = TileSpace.TileClass;
-using Utility = UtilitySpace.UtilityClass;
+using Utility = UtilitySpace.Matrix;
 
 namespace bfs{
     class bfs{
@@ -183,20 +183,6 @@ namespace bfs{
             bfs BFS = new bfs(utility.getMatrix());
             BFS.startfind();
             BFS.printStep();
-            // BFS.setTile();
-
-            // int count = BFS.getTreasureCount();
-
-            // Console.WriteLine("Count: " + count);
-            // for(int i = 0; i < count; i++){
-            //     BFS.BFS();
-            // }
-            // List<Tuple<string,int,int>> path = BFS.getAppendedPath();
-            // foreach (Tuple<string, int, int> tuple in path)
-            // {
-            //     Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3);
-            // }
-            // Console.WriteLine();
         }
     }
 
