@@ -1,7 +1,8 @@
 using System;
-using obj.Tile;
+using System.Collections.Generic;
+using Tile = TileSpace.TileClass;
 
-namespace Utility
+namespace UtilitySpace
 {
     public class Matrix
     {
@@ -67,7 +68,7 @@ namespace Utility
         }
 
         /* Getter */
-        Tiles getTile(int i) { 
+        Tile getTile(int i) { 
             return tiles[i];
         }
 
