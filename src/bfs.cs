@@ -23,9 +23,7 @@ namespace bfsSpace{
             for(int i = 0; i < rows; i++){
                 for(int j = 0; j < cols; j++){
                     if(matrix[i,j] != "X"){
-                        Tile tile = new Tile();
-                        tile.setCoordinate(new int[2]{i,j});
-                        tile.setValue(matrix[i,j]);
+                        Tile tile = new Tile(matrix[i,j], i, j);
                         tiles.Add(tile);
                         if(matrix[i,j] == "K"){
                             start = tile;
