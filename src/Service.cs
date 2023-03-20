@@ -44,32 +44,7 @@ namespace Services
             }
         }
 
-        protected abstract void visit(Tile tile, string direction);
-
-        /* reset all tile in tiles & clearing the stack */
-        public abstract void refresh();
-    }
-
-
-    public class BFS : BaseFS
-    {
-        protected Queue<Tile> queue;
-
-        public BFS(Tiles input) : base(input)
-        {
-            queue = new Queue<Tile>();
-        }
-
-        public override void refresh()
-        {
-            foreach (Tile tile in tiles)
-            {
-                tile.reset();
-            }
-            queue = new Queue<Tile>();
-        }
-
-        protected override void visit(Tile tile, string direction)
+        public void visit(Tile tile, string direction)
         {
             try
             {
@@ -96,7 +71,7 @@ namespace Services
 
                 if (!adjTile.isVisited())
                 {
-                    queue.Enqueue(adjTile);
+                    inputTile(adjTile);
                     adjTile.hasVisited();
                     adjTile.addPath(tile, direction);
                 }
@@ -105,6 +80,36 @@ namespace Services
             {
 
             }
+        }
+
+        public abstract void inputTile(Tile tile);
+
+        /* reset all tile in tiles & clearing the stack */
+        public abstract void refresh();
+    }
+
+
+    public class BFS : BaseFS
+    {
+        protected Queue<Tile> queue;
+
+        public BFS(Tiles input) : base(input)
+        {
+            queue = new Queue<Tile>();
+        }
+
+        public override void refresh()
+        {
+            foreach (Tile tile in tiles)
+            {
+                tile.reset();
+            }
+            queue = new Queue<Tile>();
+        }
+
+        public override void inputTile(Tile tile)
+        {
+            queue.Enqueue(tile);
         }
 
         public void run()
@@ -163,42 +168,9 @@ namespace Services
             stack = new Stack<Tile>();
         }
 
-        protected override void visit(Tile tile, string direction)
+        public override void inputTile(Tile tile)
         {
-            try
-            {
-                Tile adjTile;
-                if (direction == "Down")
-                {
-                    adjTile = tile.getDown();
-
-                }
-                else if (direction == "Right")
-                {
-                    adjTile = tile.getRight();
-
-                }
-                else if (direction == "Left")
-                {
-                    adjTile = tile.getLeft();
-
-                }
-                else
-                {
-                    adjTile = tile.getUp();
-                }
-
-                if (!adjTile.isVisited())
-                {
-                    stack.Push(adjTile);
-                    adjTile.hasVisited();
-                    adjTile.addPath(tile, direction);
-                }
-            }
-            catch (NullReferenceException ex)
-            {
-
-            }
+            stack.Push(tile);
         }
 
         public void run()

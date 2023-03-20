@@ -123,7 +123,7 @@ namespace DfsSpace
                     this.start = start;
                     break;
 
-                // if The Tile is not Treasure
+                // if The Tile is not Treasure, visit all the adjacent
                 } else {
                     visit(tile, "Left");
                     visit(tile, "Up");
