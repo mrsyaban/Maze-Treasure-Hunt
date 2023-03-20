@@ -152,7 +152,7 @@ namespace Services
 
     public class DFS : BaseFS
     {
-        protected Stack<Tile> stack;
+        private Stack<Tile> stack;
 
         public DFS(Tiles input) : base(input)
         {
@@ -217,5 +217,25 @@ namespace Services
                 }
             }
         }
+    }
+
+    public class TSP : BFS
+    {
+        private Tile home;
+
+        public TSP(Tiles input) : base(input)
+        {
+            this.home = this.start;
+        }
+
+        public void runTSP()
+        {
+            // run BFS
+            this.run();
+
+            this.treasure.Add(home);
+            this.run();
+        }
+
     }
 }

@@ -20,7 +20,6 @@ namespace bfsSpace{
             start = input.getStart();
         }
 
-
         public int getTreasureCount(){
             return treasure.Count;
         }
@@ -45,6 +44,8 @@ namespace bfsSpace{
             }
             queue = new Queue<Tile>();
         }
+
+        
 
         public void BFS(){
             queue.Enqueue(start);
