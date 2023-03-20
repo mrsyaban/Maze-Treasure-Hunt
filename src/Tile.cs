@@ -2,25 +2,33 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Tile
+namespace obj.Tile
 {
     public class Tile
     {
         private int[] coordinate;
-        private int value;
+        private char value;
         private bool visited;
         private List<Tile> path;
         private Tile Down;
         private Tile Right;
         private Tile Up;
         private Tile Left;
+
         /* Constructor */
         public Tile() {
             coordinate = new int[2];
-            value = 0;
+            this.value = 'X';
             visited = false;
             path = new List<Tile>();
+        }
 
+        public Tile(char val)
+        {
+            coordinate = new int[2];
+            this.value = val;
+            visited = false;
+            path = new List<Tile>();
         }
 
         /* Getter */
@@ -65,7 +73,7 @@ namespace Tile
         public void addPath(Tile tile){
             path.Add(tile);
         }
-        public void setValue(int val){
+        public void setValue(char val){
             value = val;
         }
         public void setDown(Tile tile){
@@ -80,6 +88,10 @@ namespace Tile
         public void setLeft(Tile tile){
             Left = tile;
         }
+
+
+        /* Utility Function */
+
         public void printInfo(){
             Console.WriteLine("Coordinate: " + coordinate[0] + "," + coordinate[1]);
             Console.WriteLine("Value: " + value);
@@ -94,6 +106,8 @@ namespace Tile
             Console.WriteLine(Right.getCoordinate()[0] + "," + Right.getCoordinate()[1]);
             Console.WriteLine(Down.getCoordinate()[0] + "," + Down.getCoordinate()[1]);
         }
+
+
 
     }
 }

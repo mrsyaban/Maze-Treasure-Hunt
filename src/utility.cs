@@ -1,4 +1,6 @@
 using System;
+using obj.Tile;
+
 namespace Utility
 {
     public class Matrix
@@ -53,5 +55,25 @@ namespace Utility
         //     utility.printMatrix();
 
         // }
+    }
+
+    public class Tiles
+    {
+        private List<Tile> tiles;
+        
+        /* constructor */
+        public Tiles() {
+            tiles = new List<Tile>();
+        }
+
+        /* Getter */
+        Tiles getTile(int i) { 
+            return tiles[i];
+        }
+
+        /* Setter */
+        public void addTile(Tile tile) { 
+            tiles.Add(tile);
+        }
     }
 }
