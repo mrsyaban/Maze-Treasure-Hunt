@@ -1,30 +1,36 @@
 # Detect the operating system
 ifeq ($(shell uname), Darwin)
     # macOS build instructions
-	FLAGS = mono
-else ifeq ($(OS), Windows_NT)
-    # Windows build instructions
-	FLAGS = 
+	FLAGS = mono 
+	DEL = rm
+	SLASH = /
 else
-    $(error Unsupported operating system)
+	FLAGS =	
+	DEL = del
+	SLASH = \\
 endif
 
 # Build instructions
 bfs:
 	csc /out:bin/BFS.exe src/Bfs.cs src/Utility.cs src/Tile.cs
+	$(FLAGS) ./bin/BFS.exe
 
 dfs:
-	csc /out:bin/DFS.exe src/dfs.cs src/Utility.cs src/Tile.cs
+	csc /out:bin/DFS.exe src/Dfs.cs src/Utility.cs src/Tile.cs
+	$(FLAGS) ./bin/DFS.exe
 
 tsp:
-	csc /out:bin/TSP.exe src/tsp.cs src/Bfs.cs src/Utility.cs src/Tile.cs
+	csc /out:bin/TSP.exe src/Tsp.cs src/Bfs.cs src/Utility.cs src/Tile.cs
+	$(FLAGS) ./bin/TSP.exe
 
 main:
-	csc /out:bin/Main.exe src/Main.cs src/Bfs.cs src/dfs.cs src/tsp.cs src/Utility.cs src/Tile.cs
+	csc /out:bin/Main.exe src/Main.cs src/Bfs.cs src/Dfs.cs src/Tsp.cs src/Utility.cs src/Tile.cs
 
 run:
-	$(FLAGS) bin/*.exe
+	$(FLAGS) ./bin/Main.exe
 
 clean:
-	rm bin/*.exe
+	$(DEL) bin$(SLASH)*.exe
+
+
 
