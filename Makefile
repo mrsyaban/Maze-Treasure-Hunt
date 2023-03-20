@@ -7,7 +7,7 @@ ifeq ($(shell uname), Darwin)
 else
 	FLAGS =	
 	DEL = del
-	SLASH = \\
+	SLASH = \
 endif
 
 # Build instructions
