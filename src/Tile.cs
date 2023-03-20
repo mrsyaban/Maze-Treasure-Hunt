@@ -114,7 +114,7 @@ namespace TileSpace
             foreach(Tuple<string, int, int> tuple in path){
                 this.path.Add(tuple);
             }
-            this.path.Add(new Tuple<string, int, int>(direction, tile.getCoordinate()[0], tile.getCoordinate()[1]));
+            this.path.Add(new Tuple<string, int, int>(direction, tile.getCoordinate(0), tile.getCoordinate(1)));
         }
 
         public void printInfo(){
@@ -128,16 +128,16 @@ namespace TileSpace
                 }
             }
             if(Down != null){
-                Console.WriteLine("Down: " + Down.getCoordinate()[0] + "," + Down.getCoordinate()[1]);
+                Console.WriteLine("Down: " + Down.getCoordinate(0) + "," + Down.getCoordinate(1));
             }
             if(Right != null){
-                Console.WriteLine("Right: " + Right.getCoordinate()[0] + "," + Right.getCoordinate()[1]);
+                Console.WriteLine("Right: " + Right.getCoordinate(0) + "," + Right.getCoordinate(1));
             }
             if(Up != null){
-                Console.WriteLine("Up: " + Up.getCoordinate()[0] + "," + Up.getCoordinate()[1]);
+                Console.WriteLine("Up: " + Up.getCoordinate(0) + "," + Up.getCoordinate(1));
             }
             if(Left != null){
-                Console.WriteLine("Left: " + Left.getCoordinate()[0] + "," + Left.getCoordinate()[1]);
+                Console.WriteLine("Left: " + Left.getCoordinate(0) + "," + Left.getCoordinate(1));
             }
         }
 
