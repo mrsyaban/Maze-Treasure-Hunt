@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using TileSpace;
 using UtilitySpace;
@@ -55,29 +56,36 @@ namespace DfsSpace
         {
             stack.Push(start);
             start.hasVisited();
+
+            // if there is still element in stack
             while (stack.Count != 0)
             {
+                //foreach (Tile item in stack)
+                //{
+                //    Console.Write(item.getValue() + " ");
+                //}
+                //Console.WriteLine();
+
                 Tile tile = stack.Pop();
                 tile.hasVisited();
-                if (treasure.Contains(tile))
-                {
+
+                // if The Tile is Treasure
+                if (treasure.Contains(tile)) {
                     List<Tuple<string, int, int>> path = tile.getPath();
                     treasure.Remove(tile);
-                    if (treasure.Count != 0)
-                    {
-                        this.appendPath(path);
-                    }
-                    else
+                    if (treasure.Count == 0)
                     {
                         path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
-                        this.appendPath(path);
                     }
+                    this.appendPath(path);
                     this.refresh();
                     this.setStart(tile);
+                    //Console.WriteLine(stack.Count + " Reset");
                     break;
-                }
-                else
-                {
+
+                    // if The Tile is not Treasure
+                } else {
+
                     if (tile.getLeft() != null)
                     {
                         if (!tile.getLeft().isVisited())
@@ -121,8 +129,10 @@ namespace DfsSpace
 
         public void startfind()
         {
-            for (int i = 0; i < treasure.Count; i++)
+            int count = this.treasure.Count;
+            for (int i = 0; i < count; i++)
             {
+
                 this.DFS();
             }
         }
