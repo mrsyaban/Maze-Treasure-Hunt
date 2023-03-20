@@ -3,29 +3,32 @@ using System.Collections.Generic;
 
 
 
-namespace Tile
+namespace TileSpace
 {
-    class Tile
+    public class TileClass
     {
         private int[] coordinate;
-        private int value;
+        private string value;
         private bool visited;
-        private List<Tile> path;
-        private Tile Down;
-        private Tile Right;
-        private Tile Up;
-        private Tile Left;
+        private List<Tuple<string, int, int>> path;
+        private TileClass Down;
+        private TileClass Right;
+        private TileClass Up;
+        private TileClass Left;
         /* Constructor */
-        public Tile() {
+        public TileClass() {
             coordinate = new int[2];
-            value = 0;
+            value = "X";
             visited = false;
-            path = new List<Tile>();
-
+            path = new List<Tuple<string, int, int>>();
+            Down = null;
+            Right = null;
+            Up = null;
+            Left = null;
         }
 
         /* Getter */
-        public int getValue(){
+        public string getValue(){
             return value;
         }
 
@@ -33,52 +36,64 @@ namespace Tile
             return visited;
         }
 
-        public List<Tile> getPath(){
+        public List<Tuple<string, int, int>> getPath(){
             return path;
         }
 
         public int[] getCoordinate(){
             return coordinate;
         }
-        public Tile getDown(){
+        public TileClass getDown(){
             return Down;
         }
-        public Tile getRight(){
+        public TileClass getRight(){
             return Right;
         }
-        public Tile getUp(){
+        public TileClass getUp(){
             return Up;
         }
-        public Tile getLeft(){
+        public TileClass getLeft(){
             return Left;
         }
 
         /* Setter */
         public void setCoordinate(int[] coor){
-            coordinate[0] = coor[0]; 
-            coordinate[1] = coor[1]; 
+            if (coor != null)
+            {
+                coordinate = coor;
+            }
+            else
+            {
+                // Handle the case where the parameter is null
+                // You could throw an exception or set a default value here
+            }
         }
 
         public void hasVisited(){
             visited = true;
         }
 
-        public void addPath(Tile tile){
-            path.Add(tile);
+        public void addPath(TileClass tile, string direction){
+            List<Tuple<string, int, int>> path = tile.getPath();
+            foreach(Tuple<string, int, int> tuple in path){
+                this.path.Add(tuple);
+            }
+            this.path.Add(new Tuple<string, int, int>(direction, tile.getCoordinate()[0], tile.getCoordinate()[1]));
         }
-        public void setValue(int val){
+
+        public void setValue(string val){
             value = val;
         }
-        public void setDown(Tile tile){
+        public void setDown(TileClass tile){
             Down = tile;
         }
-        public void setRight(Tile tile){
+        public void setRight(TileClass tile){
             Right = tile;
         }
-        public void setUp(Tile tile){
+        public void setUp(TileClass tile){
             Up = tile;
         }
-        public void setLeft(Tile tile){
+        public void setLeft(TileClass tile){
             Left = tile;
         }
         public void printInfo(){
@@ -86,14 +101,28 @@ namespace Tile
             Console.WriteLine("Value: " + value);
             Console.WriteLine("Visited: " + visited);
             Console.WriteLine("Path: ");
-            foreach(Tile tile in path){
-                Console.WriteLine(tile.getCoordinate()[0] + "," + tile.getCoordinate()[1]);
+            if(path != null){
+                foreach(Tuple<string, int, int> tuple in path){
+                    Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + "," + tuple.Item3);
+                }
             }
-            Console.WriteLine("Neighboor:");
-            Console.WriteLine(Left.getCoordinate()[0] + "," + Left.getCoordinate()[1]);
-            Console.WriteLine(Up.getCoordinate()[0] + "," + Up.getCoordinate()[1]);
-            Console.WriteLine(Right.getCoordinate()[0] + "," + Right.getCoordinate()[1]);
-            Console.WriteLine(Down.getCoordinate()[0] + "," + Down.getCoordinate()[1]);
+            if(Down != null){
+                Console.WriteLine("Down: " + Down.getCoordinate()[0] + "," + Down.getCoordinate()[1]);
+            }
+            if(Right != null){
+                Console.WriteLine("Right: " + Right.getCoordinate()[0] + "," + Right.getCoordinate()[1]);
+            }
+            if(Up != null){
+                Console.WriteLine("Up: " + Up.getCoordinate()[0] + "," + Up.getCoordinate()[1]);
+            }
+            if(Left != null){
+                Console.WriteLine("Left: " + Left.getCoordinate()[0] + "," + Left.getCoordinate()[1]);
+            }
+        }
+
+        public void reset(){
+            visited = false;
+            path = new List<Tuple<string, int, int>>();
         }
 
     }

@@ -1,13 +1,13 @@
 using System;
-namespace Utility{
-    class Utility{
+namespace UtilitySpace{
+    public class UtilityClass{
         private string[,] matrix;
 
-        public Utility(){
+        public UtilityClass(){
             matrix = null;
         }
 
-        public Utility(string[,] matrix){
+        public void Utility(string[,] matrix){
             this.matrix = matrix;
         }
 
