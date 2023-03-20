@@ -4,7 +4,7 @@ using TileSpace;
 
 namespace UtilitySpace
 {
-    public class Tiles
+    public class Tiles : ICloneable
     {
         private List<Tile> tiles;
         private Tile start;
@@ -17,6 +17,11 @@ namespace UtilitySpace
             treasure = new List<Tile>();
             matrix = null;
             start = null;
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
 
         /* Getter */
@@ -41,6 +46,8 @@ namespace UtilitySpace
             tiles.Add(tile);
         }
 
+        /*** * Utility Methods * ***/
+        /* Parsing input file to list of tile (Tiles)*/
         public void parserFile(string path)
         {
             string[] lines = System.IO.File.ReadAllLines(path);
@@ -57,15 +64,17 @@ namespace UtilitySpace
             }
             convMatrix();
             setAdjacency();
-
         }
 
+        /* convert input files into matrix of string */
         public void convMatrix(){
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
 
             for(int i = 0; i < rows; i++){
                 for(int j = 0; j < cols; j++){
+                    
+                    // construct all tiles except "X"
                     if(matrix[i,j] != "X"){
                         Tile tile = new Tile(matrix[i,j], i, j);
                         tiles.Add(tile);
@@ -74,11 +83,54 @@ namespace UtilitySpace
                         }else if(matrix[i,j] == "T"){
                             treasure.Add(tile);
                         }else{
-                            /* Do nothing */
+                            // Do Nothing.
                         }
                     }
                 }
             }   
+        }
+
+        /* set the adjacencyof the tiles */
+        public void setAdjacency()
+        {
+            foreach (Tile tile in tiles)
+            {
+                int x = tile.getCoordinate(0);
+                int y = tile.getCoordinate(1);
+                foreach (Tile t in tiles)
+                {
+                    int x2 = t.getCoordinate(0);
+                    int y2 = t.getCoordinate(1);
+
+                    // t is below tile
+                    if (x2 == x + 1 && y2 == y)
+                    {
+                        tile.setDown(t);
+                    }
+
+                    // t is rightside tile
+                    else if (x2 == x && y2 == y + 1)
+                    {
+                        tile.setRight(t);
+                    }
+
+                    // t is upside tile
+                    else if (x2 == x - 1 && y2 == y)
+                    {
+                        tile.setUp(t);
+                    }
+
+                    // t is leftside tile
+                    else if (x2 == x && y2 == y - 1)
+                    {
+                        tile.setLeft(t);
+                    }
+                    else
+                    {
+                        /* Do nothing */
+                    }
+                }
+            }
         }
 
         public void printTile(){
@@ -98,39 +150,6 @@ namespace UtilitySpace
                     Console.WriteLine("Left: " + tile.getLeft().getCoordinate(0) + "," + tile.getLeft().getCoordinate(1));
                 }
                 Console.WriteLine();
-            }
-        }
-        public void setAdjacency()
-        {
-            foreach (Tile tile in tiles)
-            {
-                int x = tile.getCoordinate(0);
-                int y = tile.getCoordinate(1);
-                foreach (Tile t in tiles)
-                {
-                    int x2 = t.getCoordinate(0);
-                    int y2 = t.getCoordinate(1);
-                    if (x2 == x + 1 && y2 == y)
-                    {
-                        tile.setDown(t);
-                    }
-                    else if (x2 == x && y2 == y + 1)
-                    {
-                        tile.setRight(t);
-                    }
-                    else if (x2 == x - 1 && y2 == y)
-                    {
-                        tile.setUp(t);
-                    }
-                    else if (x2 == x && y2 == y - 1)
-                    {
-                        tile.setLeft(t);
-                    }
-                    else
-                    {
-                        /* Do nothing */
-                    }
-                }
             }
         }
     }

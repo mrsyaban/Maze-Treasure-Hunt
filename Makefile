@@ -13,19 +13,19 @@ endif
 
 # Build instructions
 bfs:
-	csc /out:bin/BFS.exe src/Bfs.cs src/Utility.cs src/Tile.cs
+	csc /out:bin/BFS.exe src/BFS.cs src/Utility.cs src/Tile.cs
 	$(FLAGS) ./bin/BFS.exe
 
 dfs:
-	csc /out:bin/DFS.exe src/Dfs.cs src/Utility.cs src/Tile.cs
+	csc /out:bin/DFS.exe src/DFS.cs src/Utility.cs src/Tile.cs
 	$(FLAGS) ./bin/DFS.exe
 
 tsp:
-	csc /out:bin/TSP.exe src/Tsp.cs src/Bfs.cs src/Utility.cs src/Tile.cs
+	csc /out:bin/TSP.exe src/TSP.cs src/Bfs.cs src/Utility.cs src/Tile.cs
 	$(FLAGS) ./bin/TSP.exe
 
 main:
-	csc /out:bin/Main.exe src/Main.cs src/Bfs.cs src/Dfs.cs src/Tsp.cs src/Utility.cs src/Tile.cs
+	csc /out:bin/Main.exe src/Main.cs src/Service.cs src/Utility.cs src/Tile.cs
 
 run:
 	$(FLAGS) ./bin/Main.exe

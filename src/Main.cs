@@ -1,23 +1,36 @@
 using System;
 using UtilitySpace;
+using Services;
 
 namespace main
 {
     class main
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Enter your filename: ");
+            Tiles tiles = new Tiles();
+            tiles.parserFile("test/input.txt");
 
-            string fileName = Console.ReadLine();
+            //Tiles tiles2 = (Tiles)tiles.Clone();
 
-            string path = "test/" + fileName;
+            Console.WriteLine("=============");
+            Console.WriteLine("     DFS     ");
+            Console.WriteLine("=============");
 
-            Matrix util = new Matrix();
-            util.parserFile(path);
+            DFS dfs = new DFS(tiles);
+            dfs.run();
+            dfs.printStep();
 
-            util.printMatrix();
+            tiles = new Tiles();
+            tiles.parserFile("test/input.txt");
 
+            Console.WriteLine("=============");
+            Console.WriteLine("     BFS     ");
+            Console.WriteLine("=============");
+
+            BFS bfs = new BFS(tiles);
+            bfs.run();
+            bfs.printStep();
         }
     }
 }

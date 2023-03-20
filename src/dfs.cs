@@ -9,10 +9,10 @@ namespace DfsSpace
 {
     class DfsClass
     {
-        protected List<Tile> tiles;
         protected Stack<Tile> stack;
-        protected List<Tile> treasure;
         protected List<Tuple<string, int, int>> path;
+        protected List<Tile> tiles;
+        protected List<Tile> treasure;
         protected Tile start;
 
         public DfsClass(Tiles input) {
@@ -36,12 +36,8 @@ namespace DfsSpace
             return path;
         }
 
-        public void setStart(Tile start)
-        {
-            this.start = start;
-        }
-
-        public void refresh()
+        /* reset all tile in tiles & clearing the stack */
+        private void refresh()
         {
             foreach (Tile tile in tiles)
             {
@@ -50,7 +46,43 @@ namespace DfsSpace
             stack = new Stack<Tile>();
         }
 
+        private void visit(Tile tile, string direction)
+        {
+            try
+            {
+                Tile adjTile;
+                if (direction == "Down")
+                {
+                    adjTile = tile.getDown();
 
+                }
+                else if (direction == "Right")
+                {
+                    adjTile = tile.getRight();
+
+                }
+                else if (direction == "Left")
+                {
+                    adjTile = tile.getLeft();
+
+                }
+                else
+                {
+                    adjTile = tile.getUp();
+                }
+
+                if (!adjTile.isVisited())
+                {
+                    stack.Push(adjTile);
+                    adjTile.hasVisited();
+                    adjTile.addPath(tile, direction);
+                }
+            }
+            catch (NullReferenceException ex) 
+            { 
+            
+            }
+        }
 
         public void DFS()
         {
@@ -60,12 +92,6 @@ namespace DfsSpace
             // if there is still element in stack
             while (stack.Count != 0)
             {
-                //foreach (Tile item in stack)
-                //{
-                //    Console.Write(item.getValue() + " ");
-                //}
-                //Console.WriteLine();
-
                 Tile tile = stack.Pop();
                 tile.hasVisited();
 
@@ -73,55 +99,36 @@ namespace DfsSpace
                 if (treasure.Contains(tile)) {
                     List<Tuple<string, int, int>> path = tile.getPath();
                     treasure.Remove(tile);
+
+                    // Last Treasure
                     if (treasure.Count == 0)
                     {
                         path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
                     }
-                    this.appendPath(path);
-                    this.refresh();
-                    this.setStart(tile);
-                    //Console.WriteLine(stack.Count + " Reset");
-                    break;
-
-                    // if The Tile is not Treasure
-                } else {
-
-                    if (tile.getLeft() != null)
-                    {
-                        if (!tile.getLeft().isVisited())
-                        {
-                            stack.Push(tile.getLeft());
-                            tile.getLeft().hasVisited();
-                            tile.getLeft().addPath(tile, "Left");
-                        }
-                    }
-                    if (tile.getUp() != null)
-                    {
-                        if (!tile.getUp().isVisited())
-                        {
-                            stack.Push(tile.getUp());
-                            tile.getUp().hasVisited();
-                            tile.getUp().addPath(tile, "Up");
-                        }
-                    }
-                    if (tile.getRight() != null)
-                    {
-                        if (!tile.getRight().isVisited())
-                        {
-                            stack.Push(tile.getRight());
-                            tile.getRight().hasVisited();
-                            tile.getRight().addPath(tile, "Right");
-                        }
-                    }
                     if (tile.getDown() != null)
                     {
-                        if (!tile.getDown().isVisited())
-                        {
-                            stack.Push(tile.getDown());
-                            tile.getDown().hasVisited();
-                            tile.getDown().addPath(tile, "Down");
-                        }
+                        Console.WriteLine("Mulai");
+                        Console.Write("Sebelum : "+tile.getValue() + " " + tile.isVisited() + "\n");
+                        Console.Write(tile.getDown().getUp().getValue() + " " + tile.isVisited() + "\n");
                     }
+
+                    this.appendPath(path);
+                    this.refresh();
+                    if (tile.getDown() != null)
+                    {
+                        Console.Write(tile.getValue() + " " + tile.isVisited() + "\n");
+                        Console.Write(tile.getDown().getUp().getValue() + " " + tile.isVisited() + "\n");
+                        Console.WriteLine("Selesai");
+                    }
+                    this.start = start;
+                    break;
+
+                // if The Tile is not Treasure
+                } else {
+                    visit(tile, "Left");
+                    visit(tile, "Up");
+                    visit(tile, "Right");
+                    visit(tile, "Down");
                 }
             }
 
@@ -132,7 +139,6 @@ namespace DfsSpace
             int count = this.treasure.Count;
             for (int i = 0; i < count; i++)
             {
-
                 this.DFS();
             }
         }
@@ -149,7 +155,7 @@ namespace DfsSpace
         {
 
             Tiles tiles = new Tiles();
-            tiles.parserFile("test/input.txt");
+            tiles.parserFile("test/input2.txt");
             DfsClass DFS = new DfsClass(tiles);
             DFS.startfind();
             DFS.printStep();

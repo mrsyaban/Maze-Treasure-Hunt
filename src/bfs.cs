@@ -112,7 +112,7 @@ namespace bfsSpace{
 
         public static void Main(string[] args){
             Tiles tiles = new Tiles();
-            tiles.parserFile("test/input.txt");
+            tiles.parserFile("test/input2.txt");
             bfs BFS = new bfs(tiles);
             BFS.startfind();
             BFS.printStep();
