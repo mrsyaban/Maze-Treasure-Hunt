@@ -20,7 +20,7 @@ tsp:
 	csc /out:bin/TSP.exe src/tsp.cs src/utility.cs src/Tile.cs
 
 main:
-	csc /out:bin/Main.exe src/Main.cs src/utility.cs src/Tile.cs
+	csc /out:bin/Main.exe src/Main.cs src/bfs.cs src/dfs.cs src/tsp.cs src/utility.cs src/Tile.cs
 
 run:
 	$(FLAGS) bin/*.exe
