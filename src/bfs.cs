@@ -113,7 +113,6 @@ namespace bfsSpace{
         }
 
         public static void Main(string[] args){
-
             Tiles tiles = new Tiles();
             tiles.parserFile("test/input.txt");
             bfs BFS = new bfs(tiles);
