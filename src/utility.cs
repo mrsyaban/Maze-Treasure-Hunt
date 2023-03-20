@@ -9,12 +9,13 @@ namespace UtilitySpace
         private List<Tile> tiles;
         private Tile start;
         private List<Tile> treasure;
-
+        private string[,] matrix;
         
         /* constructor */
         public Tiles() {
             tiles = new List<Tile>();
             treasure = new List<Tile>();
+            matrix = null;
             start = null;
         }
 
@@ -31,6 +32,10 @@ namespace UtilitySpace
             return start;
         }
 
+        public string[,] getMatrix(){
+            return matrix;
+        }
+
         /* Setter */
         public void addTile(Tile tile) { 
             tiles.Add(tile);
@@ -41,7 +46,7 @@ namespace UtilitySpace
             string[] lines = System.IO.File.ReadAllLines(path);
             int row = lines.Length;
             int col = lines[0].Split(' ').Length;
-            string[,] matrix = new string[row, col];
+            matrix = new string[row, col];
             for (int i = 0; i < row; i++)
             {
                 string[] line = lines[i].Split(' ');
@@ -50,12 +55,12 @@ namespace UtilitySpace
                     matrix[i, j] = line[j];
                 }
             }
-            convMatrix(matrix);
+            convMatrix();
             setAdjacency();
 
         }
 
-        public void convMatrix(string[,] matrix){
+        public void convMatrix(){
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
 
