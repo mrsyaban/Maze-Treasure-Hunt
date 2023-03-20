@@ -8,7 +8,6 @@ namespace tspSpace{
 
         public tsp(Tiles tiles) : base(tiles) {
             home = start;
-            // Do nothing
         }
 
         public void setHome(Tile home){
