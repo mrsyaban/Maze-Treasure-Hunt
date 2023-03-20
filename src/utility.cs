@@ -1,13 +1,17 @@
 using System;
-namespace UtilitySpace{
-    public class UtilityClass{
+using obj.Tile;
+
+namespace Utility
+{
+    public class Matrix
+    {
         private string[,] matrix;
 
-        public UtilityClass(){
+        public Matrix(){
             matrix = null;
         }
 
-        public void Utility(string[,] matrix){
+        public Matrix(string[,] matrix){
             this.matrix = matrix;
         }
 
@@ -51,5 +55,25 @@ namespace UtilitySpace{
         //     utility.printMatrix();
 
         // }
+    }
+
+    public class Tiles
+    {
+        private List<Tile> tiles;
+        
+        /* constructor */
+        public Tiles() {
+            tiles = new List<Tile>();
+        }
+
+        /* Getter */
+        Tiles getTile(int i) { 
+            return tiles[i];
+        }
+
+        /* Setter */
+        public void addTile(Tile tile) { 
+            tiles.Add(tile);
+        }
     }
 }

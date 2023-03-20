@@ -80,8 +80,7 @@ namespace TileSpace
             }
             this.path.Add(new Tuple<string, int, int>(direction, tile.getCoordinate()[0], tile.getCoordinate()[1]));
         }
-
-        public void setValue(string val){
+        public void setValue(char val){
             value = val;
         }
         public void setDown(TileClass tile){
@@ -96,6 +95,10 @@ namespace TileSpace
         public void setLeft(TileClass tile){
             Left = tile;
         }
+
+
+        /* Utility Function */
+
         public void printInfo(){
             Console.WriteLine("Coordinate: " + coordinate[0] + "," + coordinate[1]);
             Console.WriteLine("Value: " + value);
@@ -124,6 +127,8 @@ namespace TileSpace
             visited = false;
             path = new List<Tuple<string, int, int>>();
         }
+
+
 
     }
 }
