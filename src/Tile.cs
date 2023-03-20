@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 
 
-
 namespace Tile
 {
-    class Tile
+    public class Tile
     {
         private int[] coordinate;
         private int value;
