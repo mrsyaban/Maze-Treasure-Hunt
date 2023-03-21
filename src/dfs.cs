@@ -156,6 +156,7 @@ namespace DfsSpace
 
             Tiles tiles = new Tiles();
             tiles.parserFile("test/input2.txt");
+            tiles.printMatrix();
             DfsClass DFS = new DfsClass(tiles);
             DFS.startfind();
             DFS.printStep();
