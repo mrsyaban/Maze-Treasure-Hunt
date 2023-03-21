@@ -49,36 +49,36 @@ namespace Services
             try
             {
                 Tile adjTile;
-                if (direction == "Down")
+                if (direction == "Down") // if direction is down , move to the down tile
                 {
                     adjTile = tile.getDown();
 
                 }
-                else if (direction == "Right")
+                else if (direction == "Right") // if direction is right , move to the right tile
                 {
                     adjTile = tile.getRight();
 
                 }
-                else if (direction == "Left")
+                else if (direction == "Left") // if direction is left , move to the left tile
                 {
                     adjTile = tile.getLeft();
 
                 }
-                else
+                else // if direction is up , move to the up tile
                 {
                     adjTile = tile.getUp();
                 }
 
-                if (!adjTile.isVisited())
+                if (!adjTile.isVisited()) // if the tile is not visited , visit it
                 {
-                    inputTile(adjTile);
-                    adjTile.hasVisited();
-                    adjTile.addPath(tile, direction);
+                    inputTile(adjTile); // input the tile to the stack or queue
+                    adjTile.hasVisited(); // mark the tile as visited
+                    adjTile.addPath(tile, direction); // add the path to the tile
                 }
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException ex) // if the tile is null , do nothing
             {
-
+                // do nothing
             }
         }
         /* Method : add tile to stack */
@@ -120,36 +120,35 @@ namespace Services
         /* Methode : find path from KrustyKrab to all treasures with BFS algorithm */
         public void run()
         {
-            int count = this.treasure.Count;
+            int count = this.treasure.Count; // count the number of treasure
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++) // run BFS for each treasure
             {
-                queue.Enqueue(start);
-                start.hasVisited();
+                queue.Enqueue(start); // input the start tile to queue
+                start.hasVisited(); // mark the start tile as visited
                 while (queue.Count != 0)
                 {
-                    Tile tile = queue.Dequeue();
-                    tile.hasVisited();
-                    if (treasure.Contains(tile))
+                    Tile tile = queue.Dequeue(); // dequeue the tile
+                    if (treasure.Contains(tile)) // if the tile is treasure
                     {
-                        List<Tuple<string, int, int>> path = tile.getPath();
-                        treasure.Remove(tile);
-                        if (treasure.Count == 0)
+                        List<Tuple<string, int, int>> path = tile.getPath(); // get the path from the tile
+                        treasure.Remove(tile); // remove the treasure from the list
+                        if (treasure.Count == 0) // if there is no treasure left
                         {
                             path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
                         }
-                        this.appendPath(path);
-                        this.refresh();
-                        this.start = tile;
+                        this.appendPath(path); // add the path to the path
+                        this.refresh(); // refresh the tiles
+                        this.start = tile; // set the start tile to the treasure tile
                         break;
                     }
 
-                    else
+                    else // if the tile is not treasure
                     {
-                        visit(tile, "Down");
-                        visit(tile, "Right");
-                        visit(tile, "Up");
-                        visit(tile, "Left");
+                        visit(tile, "Down"); // visit the down tile
+                        visit(tile, "Right"); // visit the right tile
+                        visit(tile, "Up"); // visit the up tile
+                        visit(tile, "Left"); // visit the left tile
                     }
                 }
             }
@@ -188,18 +187,18 @@ namespace Services
         /* Method : run DFS, find path from KrustyKrab to all treasures with DFS algorithm */
         public void run()
         {
-            int count = this.treasure.Count;
+            int count = this.treasure.Count; // count the number of treasure
 
             for (int i = 0; i < count; i++)
             {
-                stack.Push(start);
-                start.hasVisited();
+                stack.Push(start); // input the start tile to stack
+                start.hasVisited(); // mark the start tile as visited
 
                 // if there is still element in stack
                 while (stack.Count != 0)
                 {
-                    Tile tile = stack.Pop();
-                    tile.hasVisited();
+                    Tile tile = stack.Pop(); // pop the tile
+                    // tile.hasVisited(); is not needed because it is already visited
 
                     // if The Tile is Treasure
                     if (treasure.Contains(tile))
