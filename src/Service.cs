@@ -198,8 +198,6 @@ namespace Services
                 while (stack.Count != 0)
                 {
                     Tile tile = stack.Pop(); // pop the tile
-                    // tile.hasVisited(); is not needed because it is already visited
-
                     // if The Tile is Treasure
                     if (treasure.Contains(tile))
                     {
@@ -238,6 +236,16 @@ namespace Services
         public TSP(Tiles input) : base(input)
         {
             this.home = this.start;
+        }
+        /*Getter*/
+        public Tile getHome()
+        {
+            return this.home;
+        }
+        /*Setter*/
+        public void setHome(Tile home)
+        {
+            this.home = home;
         }
         /* I.S : home is the start tile */
         /* F.S : home is the end tile */
