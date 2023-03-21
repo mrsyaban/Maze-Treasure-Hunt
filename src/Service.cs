@@ -259,4 +259,44 @@ namespace Services
             }
         }
     }
+
+    public class TSP : BFS
+    {
+        private Tile home;
+        /* Constructor */
+        public TSP(Tiles input) : base(input)
+        {
+            this.home = this.start;
+        }
+        /*Getter*/
+        public Tile getHome()
+        {
+            return this.home;
+        }
+        /*Setter*/
+        public void setHome(Tile home)
+        {
+            this.home = home;
+        }
+        /* I.S : home is the start tile */
+        /* F.S : home is the end tile */
+        /* Method : back to home */
+        public void backtoHome()
+        {
+            this.treasure.Add(home);
+            this.refresh();
+            this.run();
+        }
+        /* I.S : home is the end tile */
+        /* F.S : home is the start tile */
+        /* Method : run TSP , find path from KrustyKrab to all treasures and back to KrustyKrab with BFS algorithm */
+        public void runTSP()
+        {
+            // run BFS
+            this.run();
+            // back to home
+            this.backtoHome();
+        }
+
+    }
 }
