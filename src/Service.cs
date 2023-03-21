@@ -43,7 +43,7 @@ namespace Services
                 Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3);
             }
         }
-        /* Method : visit the tile  while checking if it is visited or not */
+        /* Method : visit the tile while checking if it is visited or not */
         public void visit(Tile tile, string direction)
         {
             try
