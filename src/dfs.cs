@@ -49,8 +49,6 @@ namespace DfsSpace
             stack = new Stack<Tile>();
         }
 
-
-
         public void DFS()
         {
             stack.Push(start);
