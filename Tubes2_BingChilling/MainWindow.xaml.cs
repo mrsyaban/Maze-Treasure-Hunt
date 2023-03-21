@@ -1,5 +1,7 @@
 ﻿using System;
+using TreasureHunterAlgo;
 using System.IO;
+using System.Windows.Media;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -11,11 +13,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using System.Runtime.InteropServices.ComTypes;
 
 
 namespace Tubes2_BingChilling
@@ -25,9 +27,29 @@ namespace Tubes2_BingChilling
     /// </summary>
     public partial class MainWindow : Window
     {
+        Maze m;
         public MainWindow()
         {
             InitializeComponent();
+
+            // binding to grid in xaml
+            ////this.Maze = Find
+            //Maze.RowDefinitions.Add(new RowDefinition());
+            //Maze.RowDefinitions.Add(new RowDefinition());
+            //var cell = new Grid();
+            //cell.SetValue(Label.ContentProperty, " testtt");
+            //cell.SetValue(Grid.RowProperty, 0);
+            //cell.SetValue(Grid.ColumnProperty, 0);
+            //cell.SetValue(BackgroundProperty, Brushes.White);
+            
+            //Maze.Children.Add(cell);
+        }
+        private void initializeMaze(object sender, EventArgs e)
+        {
+            Window mainWindow = Application.Current.MainWindow;
+            double width = mainWindow.ActualWidth;
+            double height = mainWindow.ActualHeight;
+
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -49,21 +71,48 @@ namespace Tubes2_BingChilling
                 }
                 else
                 {
-                    // Do something with the selected file path
-                    // string selectedFilePath = openFileDialog.FileName;
-                    // Update the TextBox with the selected filename
-                    // FileName.Text = System.IO.Path.GetFileName(openFileDialog.FileName);
-                    // Read the content of the selected file
-                    string fileContent = File.ReadAllText(openFileDialog.FileName);
-
-                    // Parse the file content into a two-dimensional array of characters
-                    char[,] matrix = ParseMatrix(fileContent);
-
-                    // Display the matrix in the TextBox control
-                    DisplayMatrix(matrix);
+                    m = new Maze(filePath);
+                    for (int i = 0; i < this.m.Width; i++)
+                    {
+                        mazeGrid.RowDefinitions.Add(new RowDefinition());
+                    }
+                    for (int i = 0; i < this.m.Length; i++)
+                    {
+                        mazeGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                    }
+                    TextBox cell;
+                    for (int i = 0; i < this.m.Width; i++)
+                    {
+                        for (int j = 0; j < this.m.Length; j++)
+                        {
+                            cell = new TextBox();
+                            SolidColorBrush brush;
+                            if (this.m.Content[i][j] == "X")
+                            {
+                                brush = new SolidColorBrush(Colors.Black);
+                            }
+                            else if (this.m.Content[i][j] == "K")
+                            {
+                                brush = new SolidColorBrush(Colors.Red);
+                            }else if (this.m.Content[i][j] == "T")
+                            {
+                                brush = new SolidColorBrush(Colors.Gold);
+                            }
+                            else
+                            {
+                                brush = new SolidColorBrush(Colors.White);
+                            }
+                            cell.Background = brush;
+                            Grid.SetColumn(cell, j);
+                            Grid.SetRow(cell, i);
+                            mazeGrid.Children.Add(cell);
+                        }
+                    }
                 }
             }
         }
+
+
         private char[,] ParseMatrix(string fileContent)
         {
             // Split the file content into lines
@@ -166,6 +215,15 @@ namespace Tubes2_BingChilling
 
         private void stepsBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+
+        }
+
+        private void myListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<int> dataObjects = new List<int>();
+            // add data objects to the list
+
+            myListView.ItemsSource = dataObjects;
 
         }
     }
