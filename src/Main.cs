@@ -16,23 +16,18 @@ namespace main
             Console.WriteLine("     DFS     ");
             Console.WriteLine("=============");
 
-            Tiles tiles = new Tiles();
-            tiles.parserFile(pathFile);
-            tiles.printMatrix();
-
-            DFS dfs = new DFS(tiles);
+            DFS dfs = new DFS(pathFile);
             dfs.run();
+            dfs.getresultPath();
             dfs.printStep();
 
 
             Console.WriteLine("=============");
             Console.WriteLine("     BFS     ");
             Console.WriteLine("=============");
-            
-            tiles = new Tiles();
-            tiles.parserFile(pathFile);
+           
 
-            BFS bfs = new BFS(tiles);
+            BFS bfs = new BFS(pathFile);
             bfs.run();
             bfs.printStep();
 
@@ -40,10 +35,7 @@ namespace main
             Console.WriteLine("   TSP BFS   ");
             Console.WriteLine("=============");
 
-            tiles = new Tiles();
-            tiles.parserFile(pathFile);
-
-            BFS bfs_tsp = new BFS(tiles);
+            BFS bfs_tsp = new BFS(pathFile);
             bfs_tsp.runTSP();
             bfs_tsp.printStep();
 
@@ -52,10 +44,7 @@ namespace main
             Console.WriteLine("   TSP BFS   ");
             Console.WriteLine("=============");
 
-            tiles = new Tiles();
-            tiles.parserFile(pathFile);
-
-            DFS dfs_tsp = new DFS(tiles);
+            DFS dfs_tsp = new DFS(pathFile);
             dfs_tsp.runTSP();
             dfs_tsp.printStep();
         }

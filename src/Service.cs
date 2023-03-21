@@ -16,8 +16,11 @@ namespace Services
         protected Tile home;
         
         /* Constructor */
-        public BaseFS(Tiles input)
+        public BaseFS(string path)
         {
+            Tiles input = new Tiles();
+            input.parserFile(pathFile);
+
             path = new List<Tuple<string, int, int>>();
             tiles = input.getTiles();
             treasure = input.getTreasure();
@@ -119,7 +122,7 @@ namespace Services
     {
         protected Queue<Tile> queue;
         /* Constructor */
-        public BFS(Tiles input) : base(input)
+        public BFS(string inputPath) : base(inputPath)
         {
             queue = new Queue<Tile>();
         }
@@ -190,7 +193,7 @@ namespace Services
         private Stack<Tile> stack;
 
         /* Constructor */
-        public DFS(Tiles input) : base(input)
+        public DFS(string inputPath) : base(inputPath)
         {
             stack = new Stack<Tile>();
         }
