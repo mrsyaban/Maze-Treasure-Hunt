@@ -55,12 +55,15 @@ namespace bfsSpace{
                 if(treasure.Contains(tile)){
                     List<Tuple<string,int,int>> path = tile.getPath();
                     treasure.Remove(tile);
+                    Console.WriteLine("Found treasure at " + tile.getCoordinate(0) + " " + tile.getCoordinate(1));
+                    Console.WriteLine("Remaining treasure: " + treasure.Count);
                     if(treasure.Count == 0){
                         path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
                     }
                     this.appendPath(path);
                     this.refresh();
                     this.setStart(tile);
+                    this.end = tile;
                     break;         
                 }else{
                     if(tile.getDown() != null){
@@ -110,12 +113,12 @@ namespace bfsSpace{
             }
         }
 
-        public static void Main(string[] args){
-            Tiles tiles = new Tiles();
-            tiles.parserFile("test/input2.txt");
-            bfs BFS = new bfs(tiles);
-            BFS.startfind();
-            BFS.printStep();
-        }
+        // public static void Main(string[] args){
+        //     Tiles tiles = new Tiles();
+        //     tiles.parserFile("test/input.txt");
+        //     bfs BFS = new bfs(tiles);
+        //     BFS.startfind();
+        //     BFS.printStep();
+        // }
     }
 }

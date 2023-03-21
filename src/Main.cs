@@ -16,7 +16,7 @@ namespace main
             Console.WriteLine("=============");
 
             Tiles tiles = new Tiles();
-            tiles.parserFile("test/input2.txt");
+            tiles.parserFile("test/input.txt");
 
             DFS dfs = new DFS(tiles);
             dfs.run();
@@ -28,7 +28,7 @@ namespace main
             Console.WriteLine("=============");
             
             tiles = new Tiles();
-            tiles.parserFile("test/input2.txt");
+            tiles.parserFile("test/input.txt");
 
             BFS bfs = new BFS(tiles);
             bfs.run();
@@ -39,7 +39,7 @@ namespace main
             Console.WriteLine("=============");
 
             tiles = new Tiles();
-            tiles.parserFile("test/input2.txt");
+            tiles.parserFile("test/input.txt");
 
             TSP tsp = new TSP(tiles);
             tsp.runTSP();

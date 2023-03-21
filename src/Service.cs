@@ -245,6 +245,7 @@ namespace Services
         public void backtoHome()
         {
             this.treasure.Add(home);
+            this.refresh();
             this.run();
         }
         /* I.S : home is the end tile */

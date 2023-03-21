@@ -1,6 +1,8 @@
 using bfsSpace;
 using TileSpace;
 using UtilitySpace;
+using System;
+using System.Collections.Generic;
 
 namespace tspSpace{
     public class tsp : bfs {
@@ -19,8 +21,9 @@ namespace tspSpace{
         }
 
         public void backtoHome(){
-           this.treasure.Add(home);
-           this.BFS();
+            this.treasure.Add(home);
+            this.refresh();
+            this.BFS();
         }
 
         public void startTsp(){
