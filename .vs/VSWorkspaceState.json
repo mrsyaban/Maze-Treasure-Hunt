@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\test"
+    "\\test",
+    "\\Tubes2_BingChilling"
   ],
-  "SelectedNode": "\\Tubes2_BingChilling.sln",
+  "SelectedNode": "\\Tubes2_BingChilling\\MainWindow.xaml",
   "PreviewInSolutionExplorer": false
 }
