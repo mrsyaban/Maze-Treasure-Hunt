@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Height="860" Width="1280"
         WindowStyle="SingleBorderWindow"
-        ResizeMode="CanResize"
+        ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="False">
 
@@ -41,7 +41,7 @@
                />
             <Grid
                 x:Name="mazeGrid"
-                Margin="36,40,20,0" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4"
+                Margin="43,40,20,10" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4"
                 />
 
             <Canvas>
@@ -133,7 +133,7 @@
                 Grid.Row="4" 
                 Grid.Column="2" 
                 Margin="324,65,0,0" Grid.ColumnSpan="2"/>
-            <Button Click="Button_Click" Content="Browse" Foreground="White" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Grid.Row="1" Height="33" Width="132" RenderTransformOrigin="0.327,0.576" Background="#FF6726D4" FontSize="14"/>
+            <Button Click="Browse" Content="Browse" Foreground="White" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Grid.Row="1" Height="33" Width="132" RenderTransformOrigin="0.327,0.576" Background="#FF6726D4" FontSize="14"/>
             <RadioButton Content="BFS" HorizontalAlignment="Left" Margin="44,235,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFE9E9E9" Height="25" Width="59" FontSize="20"/>
             <RadioButton Content="DFS" HorizontalAlignment="Left" Margin="44,276,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFE9E9E9" Height="26" Width="59" FontSize="20"/>
             <Button Click="Start" Content="Start" Foreground="White" HorizontalAlignment="Left" Margin="50,20,0,0" VerticalAlignment="Top" Grid.Row="4" Height="33" Width="132" RenderTransformOrigin="0.327,0.576" Background="#FF6726D4" FontSize="14"/>
