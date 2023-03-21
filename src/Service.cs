@@ -13,7 +13,7 @@ namespace Services
         protected List<Tile> tiles;
         protected List<Tile> treasure;
         protected Tile start;
-
+        /* Constructor */
         public BaseFS(Tiles input)
         {
             path = new List<Tuple<string, int, int>>();
@@ -21,7 +21,13 @@ namespace Services
             treasure = input.getTreasure();
             start = input.getStart();
         }
-
+        /* Getter */
+        /* Method : return the path */
+        protected List<Tuple<string, int, int>> getAppendedPath()
+        {
+            return path;
+        }
+        /* Method : add the path from other path */
         protected void appendPath(List<Tuple<string, int, int>> pathOther)
         {
             foreach (Tuple<string, int, int> tuple in pathOther)
@@ -29,13 +35,7 @@ namespace Services
                 path.Add(tuple);
             }
         }
-
-        protected List<Tuple<string, int, int>> getAppendedPath()
-        {
-            return path;
-        }
-
-
+        /* Method : print the path */
         public void printStep()
         {
             foreach (Tuple<string, int, int> tuple in path)
@@ -43,7 +43,7 @@ namespace Services
                 Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3);
             }
         }
-
+        /* Method : visit the tile  while checking if it is visited or not */
         public void visit(Tile tile, string direction)
         {
             try
@@ -81,10 +81,10 @@ namespace Services
 
             }
         }
-
+        /* Method : add tile to stack */
         public abstract void inputTile(Tile tile);
 
-        /* reset all tile in tiles & clearing the stack */
+        /* Method : reset all tile in tiles & clearing the stack */
         public abstract void refresh();
     }
 
@@ -92,12 +92,14 @@ namespace Services
     public class BFS : BaseFS
     {
         protected Queue<Tile> queue;
-
+        /* Constructor */
         public BFS(Tiles input) : base(input)
         {
             queue = new Queue<Tile>();
         }
-
+        /* I.S : queue is not empty */
+        /* F.S : queue is empty */
+        /* Method : reset all tile in tiles & clearing the queue */
         public override void refresh()
         {
             foreach (Tile tile in tiles)
@@ -106,12 +108,16 @@ namespace Services
             }
             queue = new Queue<Tile>();
         }
-
+        /* I.S : queue is not empty */
+        /* F.S : queue is not empty */
+        /* Method : add tile to queue */
         public override void inputTile(Tile tile)
         {
             queue.Enqueue(tile);
         }
-
+        /* I.S : queue is empty, start and treasure have defined */
+        /* F.S : queue is empty */
+        /* Methode : find path from KrustyKrab to all treasures with BFS algorithm */
         public void run()
         {
             int count = this.treasure.Count;
@@ -153,12 +159,14 @@ namespace Services
     public class DFS : BaseFS
     {
         private Stack<Tile> stack;
-
+        /* Constructor */
         public DFS(Tiles input) : base(input)
         {
             stack = new Stack<Tile>();
         }
-
+        /* I.S : stack is not empty */
+        /* F.S : stack is empty */
+        /* Method : reset all tile in tiles & clearing the stack */
         public override void refresh()
         {
             foreach (Tile tile in tiles)
@@ -167,12 +175,17 @@ namespace Services
             }
             stack = new Stack<Tile>();
         }
-
+        /* I.S : stack is empty */
+        /* F.S : stack is not empty */
+        /* Method : input tile to stack */
         public override void inputTile(Tile tile)
         {
             stack.Push(tile);
         }
 
+        /* I.S : stack is empty */
+        /* F.S : stack is not empty */
+        /* Method : run DFS, find path from KrustyKrab to all treasures with DFS algorithm */
         public void run()
         {
             int count = this.treasure.Count;
@@ -222,19 +235,28 @@ namespace Services
     public class TSP : BFS
     {
         private Tile home;
-
+        /* Constructor */
         public TSP(Tiles input) : base(input)
         {
             this.home = this.start;
         }
-
+        /* I.S : home is the start tile */
+        /* F.S : home is the end tile */
+        /* Method : back to home */
+        public void backtoHome()
+        {
+            this.treasure.Add(home);
+            this.run();
+        }
+        /* I.S : home is the end tile */
+        /* F.S : home is the start tile */
+        /* Method : run TSP , find path from KrustyKrab to all treasures and back to KrustyKrab with BFS algorithm */
         public void runTSP()
         {
             // run BFS
             this.run();
-
-            this.treasure.Add(home);
-            this.run();
+            // back to home
+            this.backtoHome();
         }
 
     }
