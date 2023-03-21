@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.5.33424.131
+VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tubes2_BingChilling", "Tubes2_BingChilling.csproj", "{7FCF26A8-94C9-4DC4-A751-1371A11A952D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tubes2_BingChilling", "Tubes2_BingChilling\Tubes2_BingChilling.csproj", "{E4576F8E-677A-475D-9880-A07C4C732F75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7FCF26A8-94C9-4DC4-A751-1371A11A952D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FCF26A8-94C9-4DC4-A751-1371A11A952D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FCF26A8-94C9-4DC4-A751-1371A11A952D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FCF26A8-94C9-4DC4-A751-1371A11A952D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4576F8E-677A-475D-9880-A07C4C732F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4576F8E-677A-475D-9880-A07C4C732F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4576F8E-677A-475D-9880-A07C4C732F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4576F8E-677A-475D-9880-A07C4C732F75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {081E4999-A1A6-4FAE-9676-CE2BE9A57F81}
+		SolutionGuid = {BE6454E0-F682-4E46-8948-2CEB1A976726}
 	EndGlobalSection
 EndGlobal

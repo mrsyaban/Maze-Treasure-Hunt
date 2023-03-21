@@ -20,7 +20,6 @@ namespace bfsSpace{
             start = input.getStart();
         }
 
-
         public int getTreasureCount(){
             return treasure.Count;
         }
@@ -45,6 +44,8 @@ namespace bfsSpace{
             }
             queue = new Queue<Tile>();
         }
+
+        
 
         public void BFS(){
             queue.Enqueue(start);
@@ -112,7 +113,7 @@ namespace bfsSpace{
 
         public static void Main(string[] args){
             Tiles tiles = new Tiles();
-            tiles.parserFile("test/input.txt");
+            tiles.parserFile("test/input2.txt");
             bfs BFS = new bfs(tiles);
             BFS.startfind();
             BFS.printStep();

@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
 
-
-
 namespace TileSpace
 {
     public class Tile
     {
-        private int[] coordinate;
-        private string value;
+        private int[] coordinate; // [x,y]
+        private string value; // R, K, or T
         private bool visited;
-        private List<Tuple<string, int, int>> path;
-        private Tile Down;
+        private List<Tuple<string, int, int>> path; // Tile's path from current position
+
+        /* Adjacency Tiles */
+        private Tile Down; 
         private Tile Right;
         private Tile Up;
         private Tile Left;
+
         /* Constructor */
         public Tile() {
             coordinate = new int[2];
@@ -57,6 +58,7 @@ namespace TileSpace
         public int getCoordinate(int i){
             return coordinate[i];
         }
+
         public Tile getDown(){
             return Down;
         }
@@ -103,18 +105,23 @@ namespace TileSpace
             Left = tile;
         }
 
-        /* Method lainnya */
-
         public void hasVisited(){
             visited = true;
         }
 
+
+        /*** * Utility Methods * ***/
         public void addPath(Tile tile, string direction){
             List<Tuple<string, int, int>> path = tile.getPath();
             foreach(Tuple<string, int, int> tuple in path){
                 this.path.Add(tuple);
             }
             this.path.Add(new Tuple<string, int, int>(direction, tile.getCoordinate(0), tile.getCoordinate(1)));
+        }
+
+        public void reset(){
+            visited = false;
+            path = new List<Tuple<string, int, int>>();
         }
 
         public void printInfo(){
@@ -141,9 +148,5 @@ namespace TileSpace
             }
         }
 
-        public void reset(){
-            visited = false;
-            path = new List<Tuple<string, int, int>>();
-        }
     }
 }
