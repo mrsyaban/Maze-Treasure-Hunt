@@ -57,7 +57,7 @@ namespace Tubes2_BingChilling
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Browse(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Text files (*.txt)|*.txt";
@@ -94,7 +94,8 @@ namespace Tubes2_BingChilling
                             else if (this.m.Content[i][j] == "K")
                             {
                                 brush = new SolidColorBrush(Colors.Red);
-                            }else if (this.m.Content[i][j] == "T")
+                            }
+                            else if (this.m.Content[i][j] == "T")
                             {
                                 brush = new SolidColorBrush(Colors.Gold);
                             }
@@ -108,6 +109,38 @@ namespace Tubes2_BingChilling
                             mazeGrid.Children.Add(cell);
                         }
                     }
+                    //TextBox cell;
+                    //for (int j = 0; j < this.solution.Length; j++)
+                    //{
+                    //    cell = get the textbox with solutions coordinate;
+                    //    SolidColorBrush brush;
+                    //    count++;
+                    //    if (count == 1)
+                    //    {
+                    //        brush = new SolidColorBrush(Colors.Black);
+                    //    }
+                    //    else if (count == 2)
+                    //    {
+                    //        brush = new SolidColorBrush(Colors.Red);
+                    //    }
+                    //    else if (count == 3)
+                    //    {
+                    //        brush = new SolidColorBrush(Colors.Gold);
+                    //    }
+                    //    else if (count == 4)
+                    //    {
+                    //        brush = new SolidColorBrush(Colors.Gold);
+                    //    }
+                    //    else if (count == 5)
+                    //    {
+                    //        brush = new SolidColorBrush(Colors.Gold);
+                    //    }
+
+                    //    cell.Background = brush;
+                    //    Grid.SetColumn(cell, j);
+                    //    Grid.SetRow(cell, i);
+                    //    mazeGrid.Children.replace(cell);
+
                 }
             }
         }
