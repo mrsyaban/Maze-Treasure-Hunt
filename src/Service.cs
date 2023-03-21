@@ -87,6 +87,17 @@ namespace Services
             }
         }
 
+        /* Abstract Method : add tile to stack */
+        public abstract void inputTile(Tile tile);
+
+        /* Abstract Method : reset all tile in tiles & clearing the stack */
+        public abstract void refresh();
+
+        /* Abstract Method : searching algorithm */
+        public abstract void run();
+
+
+        /* TSP Algorithm : back to home after get all the treasure */
         public void backtoHome()
         {
             this.treasure.Add(home);
@@ -101,15 +112,6 @@ namespace Services
             // back to home
             this.backtoHome();
         }
-
-        /* Abstract Method : add tile to stack */
-        public abstract void inputTile(Tile tile);
-
-        /* Abstract Method : reset all tile in tiles & clearing the stack */
-        public abstract void refresh();
-
-        /* Abstract Method : searching algorithm */
-        public abstract void run();
     }
 
 
