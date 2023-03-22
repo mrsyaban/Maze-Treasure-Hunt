@@ -54,10 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="bfs.cs" />
-    <Compile Include="dfs.cs" />
-    <Compile Include="Main.cs" />
     <Compile Include="Service.cs" />
+    <Compile Include="Tile.cs" />
+    <Compile Include="utility.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -44,20 +44,7 @@
                 Margin="43,40,20,10" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4"
                 />
 
-            <Canvas>
-                <Rectangle Fill="Wheat" x:Name="rectangle" Width="362" Height="200" HorizontalAlignment="Left" Canvas.Left="236" VerticalAlignment="Top" Canvas.Top="-370"/>
-
-            </Canvas>
-            <TextBox x:Name="display" Width="322" Height="180" TextWrapping="Wrap" AcceptsReturn="True" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="109,-387,0,0" Grid.ColumnSpan="2"/>
-            <ListView Name="myListView" Margin="44,364,37,-419" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="2" SelectionChanged="myListView_SelectionChanged" Grid.Row="4">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn  Width="120" DisplayMemberBinding="{Binding Column1}" />
-                        <GridViewColumn Header="Column 2" Width="120" DisplayMemberBinding="{Binding Column2}" />
-                        <GridViewColumn Header="Column 3" Width="120" DisplayMemberBinding="{Binding Column3}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <Canvas/>
 
 
 

@@ -13,20 +13,28 @@ namespace Services
         protected List<Tile> tiles;
         protected List<Tile> treasure;
         protected Tile start;
+        protected Tile home;
+        
         /* Constructor */
-        public BaseFS(Tiles input)
+        public BaseFS(string pathFile)
         {
+            Tiles input = new Tiles();
+            input.parserFile(pathFile);
+
             path = new List<Tuple<string, int, int>>();
             tiles = input.getTiles();
             treasure = input.getTreasure();
             start = input.getStart();
+            home = start;
         }
+
         /* Getter */
         /* Method : return the path */
-        protected List<Tuple<string, int, int>> getAppendedPath()
+        public List<Tuple<string, int, int>> getResultPath()
         {
             return path;
         }
+
         /* Method : add the path from other path */
         protected void appendPath(List<Tuple<string, int, int>> pathOther)
         {
@@ -81,11 +89,32 @@ namespace Services
                 // do nothing
             }
         }
-        /* Method : add tile to stack */
+
+        /* Abstract Method : add tile to stack */
         public abstract void inputTile(Tile tile);
 
-        /* Method : reset all tile in tiles & clearing the stack */
+        /* Abstract Method : reset all tile in tiles & clearing the stack */
         public abstract void refresh();
+
+        /* Abstract Method : searching algorithm */
+        public abstract void run();
+
+
+        /* TSP Algorithm : back to home after get all the treasure */
+        public void backtoHome()
+        {
+            this.treasure.Add(home);
+            this.refresh();
+            this.run();
+        }
+
+        public void runTSP()
+        {
+            // run dfs/bfs
+            this.run();
+            // back to home
+            this.backtoHome();
+        }
     }
 
 
@@ -93,10 +122,11 @@ namespace Services
     {
         protected Queue<Tile> queue;
         /* Constructor */
-        public BFS(Tiles input) : base(input)
+        public BFS(string inputPath) : base(inputPath)
         {
             queue = new Queue<Tile>();
         }
+
         /* I.S : queue is not empty */
         /* F.S : queue is empty */
         /* Method : reset all tile in tiles & clearing the queue */
@@ -108,6 +138,7 @@ namespace Services
             }
             queue = new Queue<Tile>();
         }
+
         /* I.S : queue is not empty */
         /* F.S : queue is not empty */
         /* Method : add tile to queue */
@@ -115,10 +146,11 @@ namespace Services
         {
             queue.Enqueue(tile);
         }
+
         /* I.S : queue is empty, start and treasure have defined */
         /* F.S : queue is empty */
         /* Methode : find path from KrustyKrab to all treasures with BFS algorithm */
-        public void run()
+        public override void run()
         {
             int count = this.treasure.Count; // count the number of treasure
 
@@ -157,12 +189,15 @@ namespace Services
 
     public class DFS : BaseFS
     {
+        /* Attribute */
         private Stack<Tile> stack;
+
         /* Constructor */
-        public DFS(Tiles input) : base(input)
+        public DFS(string inputPath) : base(inputPath)
         {
             stack = new Stack<Tile>();
         }
+
         /* I.S : stack is not empty */
         /* F.S : stack is empty */
         /* Method : reset all tile in tiles & clearing the stack */
@@ -174,6 +209,7 @@ namespace Services
             }
             stack = new Stack<Tile>();
         }
+
         /* I.S : stack is empty */
         /* F.S : stack is not empty */
         /* Method : input tile to stack */
@@ -185,7 +221,7 @@ namespace Services
         /* I.S : stack is empty */
         /* F.S : stack is not empty */
         /* Method : run DFS, find path from KrustyKrab to all treasures with DFS algorithm */
-        public void run()
+        public override void run()
         {
             int count = this.treasure.Count; // count the number of treasure
 
@@ -227,45 +263,5 @@ namespace Services
                 }
             }
         }
-    }
-
-    public class TSP : BFS
-    {
-        private Tile home;
-        /* Constructor */
-        public TSP(Tiles input) : base(input)
-        {
-            this.home = this.start;
-        }
-        /*Getter*/
-        public Tile getHome()
-        {
-            return this.home;
-        }
-        /*Setter*/
-        public void setHome(Tile home)
-        {
-            this.home = home;
-        }
-        /* I.S : home is the start tile */
-        /* F.S : home is the end tile */
-        /* Method : back to home */
-        public void backtoHome()
-        {
-            this.treasure.Add(home);
-            this.refresh();
-            this.run();
-        }
-        /* I.S : home is the end tile */
-        /* F.S : home is the start tile */
-        /* Method : run TSP , find path from KrustyKrab to all treasures and back to KrustyKrab with BFS algorithm */
-        public void runTSP()
-        {
-            // run BFS
-            this.run();
-            // back to home
-            this.backtoHome();
-        }
-
     }
 }
