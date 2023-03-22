@@ -29,7 +29,7 @@ namespace Services
         }
 
         /* Getter */
-        /* Method : return the path */
+        /* Method : return the result path with format (value, count, x, y)*/
         public List<Tuple<string, int, int, int>> getResultPath()
         {
             List<Tuple<string, int, int, int>> pathWithCount = new List<Tuple<string, int, int, int>>();
