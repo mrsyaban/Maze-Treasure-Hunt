@@ -30,9 +30,34 @@ namespace Services
 
         /* Getter */
         /* Method : return the path */
-        protected List<Tuple<string, int, int>> getResultPath()
+        public List<Tuple<string, int, int, int>> getResultPath()
         {
-            return path;
+            List<Tuple<string, int, int, int>> pathWithCount = new List<Tuple<string, int, int, int>>();
+            foreach (Tuple<string, int, int> tuple in this.path)
+            {
+                bool isExist = false;
+                for (int i = 0; i < pathWithCount.Count; i++)
+                {
+                    if (tuple.Item2 == pathWithCount[i].Item3 && tuple.Item3 == pathWithCount[i].Item4)
+                    {
+                        isExist = true;
+                    }
+
+                    if (isExist)
+                    {
+                        pathWithCount[i] = new Tuple<string, int, int, int>(pathWithCount[i].Item1, pathWithCount[i].Item2 + 1, pathWithCount[i].Item3, pathWithCount[i].Item4);
+                        break;
+
+                    }
+
+                }
+                if (!isExist)
+                {
+                    Tuple<string, int, int, int> tempCount = new Tuple<string, int, int, int>(tuple.Item1, 1, tuple.Item2, tuple.Item3);
+                    pathWithCount.Add(tempCount);
+                }
+            }
+            return pathWithCount;
         }
 
         /* Method : add the path from other path */
