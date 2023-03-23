@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Data.SqlTypes;
 using System.IO;
 using TileSpace;
 using UtilitySpace;
@@ -125,7 +127,7 @@ namespace Services
                 if (!adjTile.isVisited()) // if the tile is not visited , visit it
                 {
                     inputTile(adjTile); // input the tile to the stack or queue
-                    //adjTile.hasVisited(); // mark the tile as visited
+                    adjTile.hasVisited(); // mark the tile as visited
                     adjTile.addPath(tile, direction); // add the path to the tile
                 }
             }
@@ -202,11 +204,7 @@ namespace Services
             for (int i = 0; i < count; i++) // run BFS for each treasure
             {
                 queue.Enqueue(start); // input the start tile to queue
-<<<<<<< HEAD
                 start.hasVisited();
-=======
-                start.hasVisited(); // mark the start tile as visited
->>>>>>> fa64820b336919ea2953770351f645182d652537
                 while (queue.Count != 0)
                 {
                     Tile tile = queue.Dequeue(); // dequeue the tile
@@ -225,7 +223,7 @@ namespace Services
                         break;
                     }
 
-                    else // if the tile is not treasure
+                    else // if the tile is not active treasure
                     {
                         visit(tile, "Down"); // visit the down tile
                         visit(tile, "Right"); // visit the right tile
@@ -241,11 +239,13 @@ namespace Services
     {
         /* Attribute */
         private Stack<Tile> stack;
+        private string lastTile;
 
         /* Constructor */
         public DFS(string inputPath) : base(inputPath)
         {
             stack = new Stack<Tile>();
+            lastTile = null;
         }
 
         /* I.S : stack is not empty */
@@ -268,43 +268,6 @@ namespace Services
             stack.Push(tile);
         }
 
-        private List<Tuple<string, int, int>> getReversed(List<Tuple<string, int, int>> inputPath)
-        {
-            List<Tuple<string, int, int>> tempPath = new List<Tuple<string, int, int>>();
-            for (int i = inputPath.Count - 1; i >= 0; i--)
-            {
-                if (inputPath[i].Item1 == "Up")
-                {
-                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Down", inputPath[i].Item2, inputPath[i].Item3);
-                    tempPath.Add(tempTuple);
-                }
-                else if (inputPath[i].Item1 == "Down")
-                {
-                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Up", inputPath[i].Item2, inputPath[i].Item3);
-                    tempPath.Add(tempTuple);
-                }
-                else if (inputPath[i].Item1 == "Left")
-                {
-                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Right", inputPath[i].Item2, inputPath[i].Item3);
-                    tempPath.Add(tempTuple);
-                }
-                else if (inputPath[i].Item1 == "Right")
-                {
-                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Left", inputPath[i].Item2, inputPath[i].Item3);
-                    tempPath.Add(tempTuple);
-                }
-            }
-            return tempPath;
-        }
-
-        private void resetAllPath()
-        {
-            foreach (Tile tile in tiles)
-            {
-                tile.resetPath();
-            }
-        }
-
         /* I.S : stack is empty */
         /* F.S : stack is not empty */
         /* Method : run DFS, find path from KrustyKrab to all treasures with DFS algorithm */
@@ -312,48 +275,79 @@ namespace Services
         {
             int count = this.treasure.Count; // count the number of treasure
 
-
-            stack.Push(start); // input the start tile to stack
-            start.hasVisited(); // mark the start tile as visited
-
             for (int i = 0; i < count; i++) // run BFS for each treasure
-            { 
-                    // if there is still element in stack
+            {
+                stack.Push(start); // input the start tile to queue
+                start.hasVisited();
                 while (stack.Count != 0)
                 {
-                    Tile tile = stack.Pop(); // pop the tile
-                    tile.hasVisited(); // mark the tile as visited
-                    // if The Tile is Treasure
-                    if (treasure.Contains(tile))
+                    Tile tile = stack.Pop(); // dequeue the tile
+                    //addTile2History(tile);
+                    if (treasure.Contains(tile)) // if the tile is treasure
                     {
-                        List<Tuple<string, int, int>> path = tile.getPath();
-                        treasure.Remove(tile);
-                        // Last Treasure
-                        if (treasure.Count == 0)
+                        List<Tuple<string, int, int>> tempPath = tile.getPath(); // get the path from the tile
+                        treasure.Remove(tile); // remove the treasure from the list
+
+                        if (treasure.Count == 0) // if there is no treasure left
                         {
                             path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
                         }
 
-                        this.appendPath(path);
-                        resetAllPath();
-                        //this.refresh();
-                        this.start = tile;
+                        lastTile = tempPath[tempPath.Count - 1].Item1;
+                        this.appendPath(tempPath); // add the path to the path
+                        this.refresh();// refresh the tiles
+                        this.start = tile; // set the start tile to the treasure tile
                         break;
                     }
 
-                    // if The Tile is not Treasure, visit all the adjacent
-                    else
+                    else // if the tile is not active treasure
                     {
-                        visit(tile, "Left");
-                        visit(tile, "Up");
-                        visit(tile, "Right");
-                        visit(tile, "Down");
+                        // if start is Treasure nodes, put previous nodes to the bottom of stack
+                        if (tile.getValue() == "T")
+                        {
+                            if (lastTile == "Right")
+                            {
+                                visit(tile, "Left");
+                                visit(tile, "Up");
+                                visit(tile, "Right");
+                                visit(tile, "Down");
+                            }
+
+                            if (lastTile == "Down")
+                            {
+                                visit(tile, "Up");
+                                visit(tile, "Left");
+                                visit(tile, "Right");
+                                visit(tile, "Down");
+                            }
+
+                            if(lastTile == "Left")
+                            {
+                                visit(tile, "Right");
+                                visit(tile, "Left");
+                                visit(tile, "Up");
+                                visit(tile, "Down");
+                            }
+
+                            if(lastTile == "Up")
+                            {
+                                visit(tile, "Down");
+                                visit(tile, "Left");
+                                visit(tile, "Up");
+                                visit(tile, "Right");
+                            }
+                        }
+
+                        else
+                        {
+                            visit(tile, "Left"); // visit the left tile
+                            visit(tile, "Up"); // visit the up tile
+                            visit(tile, "Right"); // visit the right tile
+                            visit(tile, "Down"); // visit the down tile
+                        }
                     }
                 }
-            
             }
-
-
         }
 
     }
