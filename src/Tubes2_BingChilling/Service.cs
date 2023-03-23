@@ -10,6 +10,7 @@ namespace Services
     public abstract class BaseFS
     {
         protected List<Tuple<string, int, int>> path;
+        protected List<Tuple<string,int,int>> pathHistory;
         protected List<Tile> tiles;
         protected List<Tile> treasure;
         protected Tile start;
@@ -210,6 +211,8 @@ namespace Services
                 }
             }
         }
+
+        public 
     }
 
     public class DFS : BaseFS
@@ -288,5 +291,6 @@ namespace Services
                 }
             }
         }
+
     }
 }
