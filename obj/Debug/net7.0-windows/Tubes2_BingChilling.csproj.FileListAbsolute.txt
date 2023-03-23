@@ -1,5 +1,0 @@
-D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\obj\Debug\net7.0-windows\Tubes2_BingChilling.csproj.AssemblyReference.cache
-D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\obj\Debug\net7.0-windows\MainWindow.g.cs
-D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\obj\Debug\net7.0-windows\App.g.cs
-D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\obj\Debug\net7.0-windows\Tubes2_BingChilling_MarkupCompile.cache
-D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\obj\Debug\net7.0-windows\Tubes2_BingChilling_MarkupCompile.lref
