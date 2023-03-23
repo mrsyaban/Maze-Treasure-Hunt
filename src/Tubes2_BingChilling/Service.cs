@@ -10,7 +10,7 @@ namespace Services
     public abstract class BaseFS
     {
         protected List<Tuple<string, int, int>> path;
-        protected List<Tuple<string,int,int>> pathHistory;
+        protected List<Tuple<int,int,int>> pathHistory;
         protected List<Tile> tiles;
         protected List<Tile> treasure;
         protected Tile start;
@@ -21,7 +21,7 @@ namespace Services
         {
             Tiles input = new Tiles();
             input.parserFile(pathFile);
-
+            pathHistory = new List<Tuple<int, int, int>>();
             path = new List<Tuple<string, int, int>>();
             tiles = input.getTiles();
             treasure = input.getTreasure();
@@ -49,6 +49,30 @@ namespace Services
                 pathWithCount.Add(temp);
             }
             return pathWithCount;
+        }
+
+        /* Method : return the result path with format (count, x, y)*/
+        public List<Tuple<int,int,int>> getHistoryPath()
+        {
+            return this.pathHistory;
+        }
+        /* Method : add the tile to the path */
+        public void addTile2History(Tile tile)
+        {
+            bool isExist = false;
+            for(int i = 0; i < this.pathHistory.Count; i++)
+            {
+                if (this.pathHistory[i].Item2 == tile.getCoordinate(0) && this.pathHistory[i].Item3 == tile.getCoordinate(1))
+                {
+                    pathHistory.Add(new Tuple<int, int, int>(this.pathHistory[i].Item1 + 1, tile.getCoordinate(0), tile.getCoordinate(1)));
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist)
+            {
+                pathHistory.Add(new Tuple<int, int, int>(1, tile.getCoordinate(0), tile.getCoordinate(1)));
+            }
         }
 
         //public int getNodes()
@@ -178,11 +202,11 @@ namespace Services
             for (int i = 0; i < count; i++) // run BFS for each treasure
             {
                 queue.Enqueue(start); // input the start tile to queue
-                
+                start.hasVisited(); // mark the start tile as visited
                 while (queue.Count != 0)
                 {
                     Tile tile = queue.Dequeue(); // dequeue the tile
-                    
+                    addTile2History(tile);
                     if (treasure.Contains(tile)) // if the tile is treasure
                     {
                         List<Tuple<string, int, int>> path = tile.getPath(); // get the path from the tile
@@ -207,8 +231,6 @@ namespace Services
                 }
             }
         }
-
-        public 
     }
 
     public class DFS : BaseFS

@@ -41,6 +41,13 @@ namespace main
             BFS bfs = new BFS(pathFile);
             bfs.run();
             bfs.printStep();
+            List<Tuple<int, int, int>> count2 = bfs.getHistoryPath();
+            Console.WriteLine("mulai");
+            Console.WriteLine(count2.Count);
+            foreach (Tuple<int, int, int> tuple in count2)
+            {
+                Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3);
+            }
 
             Console.WriteLine("=============");
             Console.WriteLine("   TSP BFS   ");
