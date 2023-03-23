@@ -112,8 +112,8 @@ namespace TileSpace
 
         /*** * Utility Methods * ***/
         public void addPath(Tile tile, string direction){
-            List<Tuple<string, int, int>> path = tile.getPath();
-            foreach(Tuple<string, int, int> tuple in path){
+            List<Tuple<string, int, int>> tempPath = tile.getPath();
+            foreach(Tuple<string, int, int> tuple in tempPath){
                 this.path.Add(tuple);
             }
             this.path.Add(new Tuple<string, int, int>(direction, tile.getCoordinate(0), tile.getCoordinate(1)));

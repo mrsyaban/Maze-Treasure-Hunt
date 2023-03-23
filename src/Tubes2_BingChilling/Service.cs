@@ -35,30 +35,25 @@ namespace Services
             List<Tuple<string, int, int, int>> pathWithCount = new List<Tuple<string, int, int, int>>();
             foreach (Tuple<string, int, int> tuple in this.path)
             {
-                bool isExist = false;
+                int appearence = 0;
                 for (int i = 0; i < pathWithCount.Count; i++)
                 {
                     if (tuple.Item2 == pathWithCount[i].Item3 && tuple.Item3 == pathWithCount[i].Item4)
                     {
-                        isExist = true;
+                        appearence++;
                     }
-
-                    if (isExist)
-                    {
-                        pathWithCount[i] = new Tuple<string, int, int, int>(pathWithCount[i].Item1, pathWithCount[i].Item2 + 1, pathWithCount[i].Item3, pathWithCount[i].Item4);
-                        break;
-
-                    }
-
                 }
-                if (!isExist)
-                {
-                    Tuple<string, int, int, int> tempCount = new Tuple<string, int, int, int>(tuple.Item1, 1, tuple.Item2, tuple.Item3);
-                    pathWithCount.Add(tempCount);
-                }
+
+                Tuple<string, int, int, int> temp = new Tuple<string, int, int, int>(tuple.Item1, appearence+1, tuple.Item2, tuple.Item3);
+                pathWithCount.Add(temp);
             }
             return pathWithCount;
         }
+
+        //public int getNodes()
+        //{
+        //    List<Tuple<string, int, int, int>> pathWithCount
+        //}
 
         /* Method : add the path from other path */
         protected void appendPath(List<Tuple<string, int, int>> pathOther)
@@ -182,10 +177,11 @@ namespace Services
             for (int i = 0; i < count; i++) // run BFS for each treasure
             {
                 queue.Enqueue(start); // input the start tile to queue
-                start.hasVisited(); // mark the start tile as visited
+                
                 while (queue.Count != 0)
                 {
                     Tile tile = queue.Dequeue(); // dequeue the tile
+                    
                     if (treasure.Contains(tile)) // if the tile is treasure
                     {
                         List<Tuple<string, int, int>> path = tile.getPath(); // get the path from the tile
@@ -250,8 +246,8 @@ namespace Services
         {
             int count = this.treasure.Count; // count the number of treasure
 
-            for (int i = 0; i < count; i++)
-            {
+            //for (int i = 0; i < count; i++)
+            //{
                 stack.Push(start); // input the start tile to stack
                 start.hasVisited(); // mark the start tile as visited
 
@@ -259,6 +255,7 @@ namespace Services
                 while (stack.Count != 0)
                 {
                     Tile tile = stack.Pop(); // pop the tile
+                 
                     // if The Tile is Treasure
                     if (treasure.Contains(tile))
                     {
@@ -268,13 +265,20 @@ namespace Services
                         // Last Treasure
                         if (treasure.Count == 0)
                         {
+                            this.appendPath(path);
                             path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
+                            break;
                         }
 
-                        this.appendPath(path);
-                        this.refresh();
-                        this.start = tile;
-                        break;
+
+                     visit(tile, "Left");
+                     visit(tile, "Up");
+                     visit(tile, "Right");
+                     visit(tile, "Down");
+
+                    //this.refresh();
+                    //this.start = tile;
+                    //break;
                     }
 
                     // if The Tile is not Treasure, visit all the adjacent
@@ -286,7 +290,7 @@ namespace Services
                         visit(tile, "Down");
                     }
                 }
-            }
+            //}
         }
     }
 }

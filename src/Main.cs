@@ -2,6 +2,8 @@ using System;
 using UtilitySpace;
 using Services;
 
+using System.Collections.Generic;
+
 namespace main
 {
     class main
@@ -10,7 +12,7 @@ namespace main
         {
 
             //Tiles tiles2 = (Tiles)tiles.Clone();
-            string pathFile = "test/sampel-1.txt";
+            string pathFile = "../test/sampel-1.txt";
 
             Console.WriteLine("=============");
             Console.WriteLine("     DFS     ");
@@ -18,8 +20,17 @@ namespace main
 
             DFS dfs = new DFS(pathFile);
             dfs.run();
-            dfs.getresultPath();
             dfs.printStep();
+
+            List<Tuple<string, int, int, int>> count = dfs.getResultPath();
+            Console.WriteLine("mulai");
+            Console.WriteLine(count.Count);
+            foreach (Tuple<string, int, int, int> tuple in count)
+            {
+                Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3 + " " + tuple.Item4);
+            }
+            Console.WriteLine("selesai");
+
 
 
             Console.WriteLine("=============");
