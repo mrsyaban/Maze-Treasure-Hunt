@@ -63,7 +63,7 @@
                 FontSize="46"
                 Grid.Column="2" 
                 Width="310" FontWeight="Bold" FontFamily="Palatino Linotype" Margin="16,0,8,0"/>
-            <CheckBox Content="Implement" HorizontalAlignment="Left" Margin="44,389,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.728,0.678"/>
+            <CheckBox x:Name="tspButton" Content="Implement" HorizontalAlignment="Left" Margin="44,389,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.728,0.678"/>
             <TextBlock
                 Text="Input File (.txt)"
                 VerticalAlignment="Top"
@@ -121,8 +121,8 @@
                 Grid.Column="2" 
                 Margin="324,65,0,0" Grid.ColumnSpan="2"/>
             <Button Click="Browse" Content="Browse" Foreground="White" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Grid.Row="1" Height="33" Width="132" RenderTransformOrigin="0.327,0.576" Background="#FF6726D4" FontSize="14"/>
-            <RadioButton Content="BFS" HorizontalAlignment="Left" Margin="44,235,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFE9E9E9" Height="25" Width="59" FontSize="20"/>
-            <RadioButton Content="DFS" HorizontalAlignment="Left" Margin="44,276,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFE9E9E9" Height="26" Width="59" FontSize="20"/>
+            <RadioButton x:Name="bfsButton" Content="BFS" HorizontalAlignment="Left" Margin="44,235,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFE9E9E9" Height="25" Width="59" FontSize="20" Checked="bfs_Checked"/>
+            <RadioButton x:Name="dfsButton" Content="DFS" HorizontalAlignment="Left" Margin="44,276,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFE9E9E9" Height="26" Width="59" FontSize="20"/>
             <Button Click="Start" Content="Start" Foreground="White" HorizontalAlignment="Left" Margin="50,20,0,0" VerticalAlignment="Top" Grid.Row="4" Height="33" Width="132" RenderTransformOrigin="0.327,0.576" Background="#FF6726D4" FontSize="14"/>
             <TextBox 
                 x:Name="routeBox" 
@@ -130,7 +130,7 @@
                 Margin="154,15,69,0" 
                 Grid.Row="4" 
                 TextWrapping="Wrap" 
-                Text="None" 
+                Text="" 
                 VerticalAlignment="Top" 
                 Width="474" 
                 Height="24" Grid.ColumnSpan="2"/>

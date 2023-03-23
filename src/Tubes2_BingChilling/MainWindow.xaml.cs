@@ -122,72 +122,118 @@ namespace Tubes2_BingChilling
         }
         private void Start(object sender, RoutedEventArgs e) 
         {
-            int steps = 0;
             int nodes = 0;
-            string route = string.Empty;
 
             // Start the Stopwatch
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            BFS bfs = new BFS(this.pathFile);
-            bfs.run();
+            List<Tuple<string, int, int, int>> resultPath;
 
-            List<Tuple<string, int, int>> resultPath = bfs.getResultPath();
-            for (int i = 0; i < resultPath.Count; i++)
+
+            // BFS search with TSP
+            if (bfsButton.IsChecked == true && tspButton.IsChecked == true)
             {
-                routeBox.Text += resultPath[i].ToString();
-                routeBox.Text += "";
+                // Set up TSP algorithm
             }
+            // DFS search with TSP
+            else if (bfsButton.IsChecked == true && tspButton.IsChecked == true)
+            {
+                // Set up TSP algorithm
+            }
+            else if (bfsButton.IsChecked == true)
+            {
+                BFS bfs = new BFS(this.pathFile);
+                bfs.run();
 
+                resultPath = bfs.getResultPath();
+                for (int i = 0; i < resultPath.Count; i++)
+                {
+                    routeBox.Text += resultPath[i].ToString();
 
+                }
+
+            }
+            // DFS search
+            else if (dfsButton.IsChecked == true)
+            {
+                DFS dfs = new DFS(this.pathFile);
+                dfs.run();
+
+                resultPath = dfs.getResultPath();
+                for (int i = 0; i < resultPath.Count; i++)
+                {
+                    routeBox.Text += resultPath[i].ToString();
+
+                }
+                
+            }
+            // No radio button is checked
+            else
+            {
+                MessageBox.Show("Please select a desired algorithm ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Tuple<string, int, int, int> emptyPath = Tuple.Create("None", 0, 0, 0);
+                List<Tuple<string, int, int, int>> emptyList = new List<Tuple<string, int, int, int>>();
+                emptyList.Add(emptyPath);
+                resultPath = emptyList;
+            }
             TextBox res;
             int count = 0;
-            for (int i = 0; i < this.m.Length; i++)
-            {
-                for (int j = 0; j < this.m.Width; j++)
-                {
-                    res = new TextBox();
-                    SolidColorBrush resBrush;
-                    count++;
-                    if (count == 1)
-                    {
-                        resBrush = new SolidColorBrush(Colors.Green);
-                    }
-                    else if (count == 2)
-                    {
-                        resBrush = new SolidColorBrush(Colors.GreenYellow);
-                    }
-                    else if (count == 3)
-                    {
-                        resBrush = new SolidColorBrush(Colors.DarkGreen);
-                    }
-                    else if (count == 4)
-                    {
-                        resBrush = new SolidColorBrush(Colors.DarkOliveGreen);
-                    }
-                    else
-                    {
-                        resBrush = new SolidColorBrush(Colors.ForestGreen);
-                    }
 
-                    res.Background = resBrush;
-                    mazeGrid.Children.Remove(mazeGrid.Children[i * this.m.Length + j]);
-                    Grid.SetColumn(res, i);
-                    Grid.SetRow(res, j);
-                    mazeGrid.Children.Add(res);
+            for (int k = 0; k < resultPath.Count; k++)
+            {
+                int row = resultPath[k].Item3;
+                int col = resultPath[k].Item4;
+                count = resultPath[k].Item2;
+                for (int j = 0; j < mazeGrid.ColumnDefinitions.Count; j++)
+                {
+                    for (int i = 0; i < mazeGrid.RowDefinitions.Count; i++)
+                    {
+                        if (i == row && j == col)
+                        {
+                            res = new TextBox();
+                            SolidColorBrush resBrush;
+
+                            if (count == 1)
+                            {
+                                resBrush = new SolidColorBrush(Colors.LightGreen);
+                            }
+                            else if (count == 2)
+                            {
+                                resBrush = new SolidColorBrush(Colors.Green);
+                            }
+                            else if (count == 3)
+                            {
+                                resBrush = new SolidColorBrush(Colors.DarkGreen);
+                            }
+                            else if (count == 4)
+                            {
+                                resBrush = new SolidColorBrush(Colors.DarkOliveGreen);
+                            }
+                            else
+                            {
+                                resBrush = new SolidColorBrush(Colors.ForestGreen);
+                            }
+
+                            Grid.SetColumn(res, col);
+                            Grid.SetRow(res, row);
+                            res.Background = resBrush;
+                            mazeGrid.Children.Add(res);
+
+
+                        }
+                    }
 
                 }
             }
-            
             // Perform some process
             showProgress(sender, e);
 
             // Stop the Stopwatch and output the elapsed time to a TextBox control
             stopwatch.Stop();
 
-            timeBox.Text = string.Format("Time taken: {0}", stopwatch.Elapsed.ToString());
-            stepsBox.Text = steps.ToString();
+            timeBox.Text = string.Format("{0} ms", stopwatch.Elapsed.TotalMilliseconds.ToString());
+            stepsBox.Text = resultPath.Count.ToString();
             nodesBox.Text = nodes.ToString();
         }
         private void showProgress(object sender, RoutedEventArgs e)
@@ -226,61 +272,12 @@ namespace Tubes2_BingChilling
 
         }
 
-        private void myListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            List<int> dataObjects = new List<int>();
-            // add data objects to the list
-
-            myListView.ItemsSource = dataObjects;
-
-        }
-        private char[,] ParseMatrix(string fileContent)
-        {
-            // Split the file content into lines
-            string[] lines = fileContent.Split('\n', '\r');
-
-            // Determine the matrix size from the first line
-            int n = lines[0].Trim().Length;
-
-            // Create a two-dimensional array of characters to store the matrix data
-            char[,] matrix = new char[n, n];
-
-            // Parse the lines into the matrix array
-            for (int i = 0; i < n; i++)
-            {
-                string line = lines[i].Trim();
-
-                for (int j = 0; j < n; j++)
-                {
-                    matrix[i, j] = line[j];
-                }
-            }
-
-            return matrix;
-        }
-        private void DisplayMatrix(char[,] matrix)
-        {
-            // Clear the TextBox control
-            display.Clear();
-
-            // Determine the matrix size
-            int n = matrix.GetLength(0);
-
-            // Iterate over the matrix and display the characters on the TextBox control
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    display.Text += matrix[i, j] + " ";
-                }
-
-                display.Text += Environment.NewLine;
-            }
-        }
+        
         private void Filename_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
+
     }
 
     
