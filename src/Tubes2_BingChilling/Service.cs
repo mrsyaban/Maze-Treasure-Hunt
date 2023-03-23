@@ -100,7 +100,7 @@ namespace Services
                 if (!adjTile.isVisited()) // if the tile is not visited , visit it
                 {
                     inputTile(adjTile); // input the tile to the stack or queue
-                    adjTile.hasVisited(); // mark the tile as visited
+                    //adjTile.hasVisited(); // mark the tile as visited
                     adjTile.addPath(tile, direction); // add the path to the tile
                 }
             }
@@ -177,7 +177,7 @@ namespace Services
             for (int i = 0; i < count; i++) // run BFS for each treasure
             {
                 queue.Enqueue(start); // input the start tile to queue
-                
+                start.hasVisited();
                 while (queue.Count != 0)
                 {
                     Tile tile = queue.Dequeue(); // dequeue the tile
@@ -239,6 +239,43 @@ namespace Services
             stack.Push(tile);
         }
 
+        private List<Tuple<string, int, int>> getReversed(List<Tuple<string, int, int>> inputPath)
+        {
+            List<Tuple<string, int, int>> tempPath = new List<Tuple<string, int, int>>();
+            for (int i = inputPath.Count - 1; i >= 0; i--)
+            {
+                if (inputPath[i].Item1 == "Up")
+                {
+                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Down", inputPath[i].Item2, inputPath[i].Item3);
+                    tempPath.Add(tempTuple);
+                }
+                else if (inputPath[i].Item1 == "Down")
+                {
+                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Up", inputPath[i].Item2, inputPath[i].Item3);
+                    tempPath.Add(tempTuple);
+                }
+                else if (inputPath[i].Item1 == "Left")
+                {
+                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Right", inputPath[i].Item2, inputPath[i].Item3);
+                    tempPath.Add(tempTuple);
+                }
+                else if (inputPath[i].Item1 == "Right")
+                {
+                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Left", inputPath[i].Item2, inputPath[i].Item3);
+                    tempPath.Add(tempTuple);
+                }
+            }
+            return tempPath;
+        }
+
+        private void resetAllPath()
+        {
+            foreach (Tile tile in tiles)
+            {
+                tile.resetPath();
+            }
+        }
+
         /* I.S : stack is empty */
         /* F.S : stack is not empty */
         /* Method : run DFS, find path from KrustyKrab to all treasures with DFS algorithm */
@@ -246,39 +283,33 @@ namespace Services
         {
             int count = this.treasure.Count; // count the number of treasure
 
-            //for (int i = 0; i < count; i++)
-            //{
-                stack.Push(start); // input the start tile to stack
-                start.hasVisited(); // mark the start tile as visited
 
-                // if there is still element in stack
+            stack.Push(start); // input the start tile to stack
+            start.hasVisited(); // mark the start tile as visited
+
+            for (int i = 0; i < count; i++) // run BFS for each treasure
+            { 
+                    // if there is still element in stack
                 while (stack.Count != 0)
                 {
                     Tile tile = stack.Pop(); // pop the tile
-                 
+                    tile.hasVisited(); // mark the tile as visited
                     // if The Tile is Treasure
                     if (treasure.Contains(tile))
                     {
                         List<Tuple<string, int, int>> path = tile.getPath();
                         treasure.Remove(tile);
-
                         // Last Treasure
                         if (treasure.Count == 0)
                         {
-                            this.appendPath(path);
                             path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
-                            break;
                         }
 
-
-                     visit(tile, "Left");
-                     visit(tile, "Up");
-                     visit(tile, "Right");
-                     visit(tile, "Down");
-
-                    //this.refresh();
-                    //this.start = tile;
-                    //break;
+                        this.appendPath(path);
+                        resetAllPath();
+                        //this.refresh();
+                        this.start = tile;
+                        break;
                     }
 
                     // if The Tile is not Treasure, visit all the adjacent
@@ -290,7 +321,10 @@ namespace Services
                         visit(tile, "Down");
                     }
                 }
-            //}
+            
+            }
+
+
         }
     }
 }
