@@ -46,3 +46,19 @@ C:\Users\naufa\OneDrive\Documents\GitHub\Tubes2_BingChilling\src\Tubes2_BingChil
 C:\Users\naufa\OneDrive\Documents\GitHub\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.Properties.Resources.resources
 C:\Users\naufa\OneDrive\Documents\GitHub\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.csproj.GenerateResource.cache
 C:\Users\naufa\OneDrive\Documents\GitHub\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.csproj.CoreCompileInputs.cache
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\bin\Debug\Tubes2_BingChilling.exe.config
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\bin\Debug\Tubes2_BingChilling.exe
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\bin\Debug\Tubes2_BingChilling.pdb
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.csproj.AssemblyReference.cache
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.csproj.SuggestedBindingRedirects.cache
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\MainWindow.g.cs
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\App.g.cs
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling_MarkupCompile.cache
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling_MarkupCompile.lref
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\MainWindow.baml
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.g.resources
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.Properties.Resources.resources
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.csproj.GenerateResource.cache
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.csproj.CoreCompileInputs.cache
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.exe
+D:\ITB 21\KULYAHHH\SEMESTER 4\Stima\Tubes-2_BFS-DFS\Tubes2_BingChilling\src\Tubes2_BingChilling\obj\Debug\Tubes2_BingChilling.pdb
