@@ -78,10 +78,6 @@ namespace Services
             }
         }
 
-        //public int getNodes()
-        //{
-        //    List<Tuple<string, int, int, int>> pathWithCount
-        //}
 
         /* Method : add the path from other path */
         protected void appendPath(List<Tuple<string, int, int>> pathOther)
@@ -99,6 +95,52 @@ namespace Services
                 Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3);
             }
         }
+
+        /* Abstract Method : add tile to stack */
+        public abstract void inputTile(Tile tile);
+
+        /* Abstract Method : reset all tile in tiles & clearing the stack */
+        public abstract void refresh();
+
+        /* Abstract Method : searching algorithm */
+        public abstract void run();
+
+
+        /* TSP Algorithm : back to home after get all the treasure */
+
+        public abstract void runTSP();
+    }
+
+
+    public class BFS : BaseFS
+    {
+        protected Queue<Tile> queue;
+        /* Constructor */
+        public BFS(string inputPath) : base(inputPath)
+        {
+            queue = new Queue<Tile>();
+        }
+
+        /* I.S : queue is not empty */
+        /* F.S : queue is empty */
+        /* Method : reset all tile in tiles & clearing the queue */
+        public override void refresh()
+        {
+            foreach (Tile tile in tiles)
+            {
+                tile.reset();
+            }
+            queue = new Queue<Tile>();
+        }
+
+        /* I.S : queue is not empty */
+        /* F.S : queue is not empty */
+        /* Method : add tile to queue */
+        public override void inputTile(Tile tile)
+        {
+            queue.Enqueue(tile);
+        }
+
         /* Method : visit the tile while checking if it is visited or not */
         public void visit(Tile tile, string direction)
         {
@@ -138,70 +180,28 @@ namespace Services
             }
         }
 
-        /* Abstract Method : add tile to stack */
-        public abstract void inputTile(Tile tile);
-
-        /* Abstract Method : reset all tile in tiles & clearing the stack */
-        public abstract void refresh();
-
-        /* Abstract Method : searching algorithm */
-        public abstract void run();
-
-
-        /* TSP Algorithm : back to home after get all the treasure */
-        public void backtoHome()
+        private void backtoHome()
         {
             this.treasure.Add(home);
             this.refresh();
             this.run();
         }
 
-        public void runTSP()
+        public override void runTSP()
         {
             // run dfs/bfs
             this.run();
             // back to home
             this.backtoHome();
-            foreach(Tuple <string, int, int> tuple in this.path)
+            foreach (Tuple<string, int, int> tuple in this.path)
             {
-                if(tuple.Item1 == "Found" && (tuple.Item2 != home.getCoordinate(0) || tuple.Item3 != home.getCoordinate(1)))
+                if (tuple.Item1 == "Found" && (tuple.Item2 != home.getCoordinate(0) || tuple.Item3 != home.getCoordinate(1)))
                 {
                     Console.WriteLine("Back to Home");
                     this.path.Remove(tuple);
                     break;
                 }
             }
-        }
-    }
-
-
-    public class BFS : BaseFS
-    {
-        protected Queue<Tile> queue;
-        /* Constructor */
-        public BFS(string inputPath) : base(inputPath)
-        {
-            queue = new Queue<Tile>();
-        }
-
-        /* I.S : queue is not empty */
-        /* F.S : queue is empty */
-        /* Method : reset all tile in tiles & clearing the queue */
-        public override void refresh()
-        {
-            foreach (Tile tile in tiles)
-            {
-                tile.reset();
-            }
-            queue = new Queue<Tile>();
-        }
-
-        /* I.S : queue is not empty */
-        /* F.S : queue is not empty */
-        /* Method : add tile to queue */
-        public override void inputTile(Tile tile)
-        {
-            queue.Enqueue(tile);
         }
 
         /* I.S : queue is empty, start and treasure have defined */
@@ -321,6 +321,55 @@ namespace Services
                 tile.resetPath();
             }
             stack = new Stack<Tile>();
+        }
+
+        private List<Tuple<string, int, int>> getHomePath(List<Tuple<string, int, int>> inputPath)
+        {
+            List<Tuple<string, int, int>> tempPath = new List<Tuple<string, int, int>>();
+            for (int i = inputPath.Count - 1; i >= 0; i--)
+            {
+                if (inputPath[i].Item1 == "Up")
+                {
+                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Down", inputPath[i].Item2, inputPath[i].Item3);
+                    tempPath.Add(tempTuple);
+                }
+                else if (inputPath[i].Item1 == "Down")
+                {
+                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Up", inputPath[i].Item2, inputPath[i].Item3);
+                    tempPath.Add(tempTuple);
+                }
+                else if (inputPath[i].Item1 == "Left")
+                {
+                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Right", inputPath[i].Item2, inputPath[i].Item3);
+                    tempPath.Add(tempTuple);
+                }
+                else if (inputPath[i].Item1 == "Right")
+                {
+                    Tuple<string, int, int> tempTuple = new Tuple<string, int, int>("Left", inputPath[i].Item2, inputPath[i].Item3);
+                    tempPath.Add(tempTuple);
+                }
+
+                if (inputPath[i].Item2 == home.getCoordinate(0) && inputPath[i].Item3 == home.getCoordinate(1))
+                {
+                    break;
+                }
+            }
+            return tempPath;
+        }
+
+        //public override void backtoHome()
+        //{
+        //    List < Tuple<string, int, int> > tempPath = 
+        //    this.refreshPath();
+        //    this.run();
+        //}
+
+        public override void runTSP()
+        {
+            // run dfs/bfs
+            this.run();
+            this.appendPath(getHomePath(this.path));
+            
         }
 
         /* I.S : stack is empty */
