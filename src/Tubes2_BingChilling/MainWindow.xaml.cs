@@ -306,7 +306,8 @@ namespace Tubes2_BingChilling
             // Output the route to routeBox
             for (int i = 0; i < resultPath.Count; i++)
             {
-                routeBox.Text += resultPath[i].ToString();
+                routeBox.Text += resultPath[i].Item1;
+                routeBox.Text += "-";
             }
             // Output the number of steps
             stepsBox.Text = historyPath.Count.ToString();
