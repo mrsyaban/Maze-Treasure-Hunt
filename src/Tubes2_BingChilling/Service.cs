@@ -197,7 +197,6 @@ namespace Services
             {
                 if (tuple.Item1 == "Found" && (tuple.Item2 != home.getCoordinate(0) || tuple.Item3 != home.getCoordinate(1)))
                 {
-                    Console.WriteLine("Back to Home");
                     this.path.Remove(tuple);
                     break;
                 }
@@ -357,19 +356,19 @@ namespace Services
             return tempPath;
         }
 
-        //public override void backtoHome()
-        //{
-        //    List < Tuple<string, int, int> > tempPath = 
-        //    this.refreshPath();
-        //    this.run();
-        //}
-
         public override void runTSP()
         {
             // run dfs/bfs
             this.run();
             this.appendPath(getHomePath(this.path));
-            
+            foreach (Tuple<string, int, int> tuple in this.path)
+            {
+                if (tuple.Item1 == "Found" && (tuple.Item2 != home.getCoordinate(0) || tuple.Item3 != home.getCoordinate(1)))
+                {
+                    this.path.Remove(tuple);
+                    break;
+                }
+            }
         }
 
         /* I.S : stack is empty */

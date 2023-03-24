@@ -12,7 +12,7 @@ namespace main
         {
 
             //Tiles tiles2 = (Tiles)tiles.Clone();
-            string pathFile = "../test/sampel-1.txt";
+            string pathFile = "../test/input.txt";
 
             Console.WriteLine("=============");
             Console.WriteLine("     DFS     ");
@@ -23,14 +23,6 @@ namespace main
             dfs.printStep();
 
             //List<Tuple<string, int, int, int>> count = dfs.getResultPath();
-            List<Tuple<int, int, int>> count = dfs.getHistoryPath();
-            Console.WriteLine("mulai");
-            Console.WriteLine(count.Count);
-            foreach (Tuple<int, int, int> tuple in count)
-            {
-                Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3);
-            }
-            Console.WriteLine("selesai");
 
 
 
@@ -42,6 +34,14 @@ namespace main
             BFS bfs = new BFS(pathFile);
             bfs.run();
             bfs.printStep();
+            List<Tuple<string, int, int, int>> count = bfs.getResultPath();
+            Console.WriteLine("mulai");
+            Console.WriteLine(count.Count);
+            foreach (Tuple<string, int, int, int> tuple in count)
+            {
+                Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3 + " " + tuple.Item4);
+            }
+            Console.WriteLine("selesai");
 
             Console.WriteLine("=============");
             Console.WriteLine("   TSP BFS   ");
