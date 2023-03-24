@@ -157,8 +157,8 @@
             <Rectangle Fill="#FF343D5E" HorizontalAlignment="Center" Height="4" Margin="0,161,0,0" Stroke="Black" StrokeThickness="0" VerticalAlignment="Top" Width="218" Grid.Row="1"/>
             <Rectangle Fill="#FF343D5E" HorizontalAlignment="Center" Height="4" Margin="0,105,0,0" Stroke="Black" StrokeThickness="0" VerticalAlignment="Top" Width="218"/>
             <Rectangle Fill="#FF343D5E" HorizontalAlignment="Center" Height="4" Margin="0,29,0,0" Stroke="Black" StrokeThickness="0" VerticalAlignment="Top" Width="218" Grid.Row="2"/>
-            <ProgressBar x:Name="progress" Grid.Column="2" HorizontalAlignment="Center" Height="10" Margin="0,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="314"/>
             <Button Click="Visualize" Content="Visualize" Foreground="White" HorizontalAlignment="Left" Margin="44,17,0,0" VerticalAlignment="Top" Grid.Row="4" Height="33" Width="132" RenderTransformOrigin="0.311,-0.848" Background="#010a29" FontSize="14"/>
+            <Slider x:Name="stepSlider"  Grid.Column="2" Margin="34,10,69,12" Grid.Row="2"/>
 
         </Grid>
     </Border>
