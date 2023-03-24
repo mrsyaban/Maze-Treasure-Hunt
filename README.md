@@ -31,11 +31,11 @@ Dalam menyelesaikan masalah tambahan, yakni menampilkan solusi dari masing masin
 
 ## Cara Kompilasi Program
 1. Lakukan git clone terhadap repositori ini
-2. Buka Solution `WinFormsApp1.sln` dari repositori ini
+2. Buka Solution `Tubes2_BingChilling.sln` dari repositori ini
 3. Run program dengan menggunakan tombol Run pada Visual Studio 2022
 
 ## Cara Menjalankan Program
-1. Buka folder `bin/Release/net6.0-windows` pada folder repositori
+1. Buka folder `obj/debug` pada folder repositori
 2. Jalankan file `Tubes2_BingChilling.exe`
 
 ## Authors
