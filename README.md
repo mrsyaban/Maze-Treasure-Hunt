@@ -1,4 +1,14 @@
-# Tubes2_BingChilling
+<div align="center">
+  <h1 align="center">Maze Treasure Hunt</h1>
+
+  <p align="center">
+    Maze Treasure Hunt with Depth First Search and Breadth First Search!
+    <br />
+    <a href="http://bit.ly/BonusVideoTubesStima2">View Demo    </a>
+    ·
+    <a href="https://github.com/mrsyaban/Tubes2_BingChilling">    Explore the docs</a>
+  </p>
+</div>
 Tugas Besar 2 IF2211 Strategi Algoritma
 Pengaplikasian Algoritma BFS dan DFS dalam Implementasi Path Finding
 
