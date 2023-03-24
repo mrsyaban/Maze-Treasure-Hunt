@@ -124,6 +124,11 @@ namespace TileSpace
             path = new List<Tuple<string, int, int>>();
         }
 
+        public void resetPath()
+        {
+            this.path = new List<Tuple<string, int, int>>();
+        }
+
         public void printInfo(){
             Console.WriteLine("Coordinate: " + coordinate[0] + "," + coordinate[1]);
             Console.WriteLine("Value: " + value);

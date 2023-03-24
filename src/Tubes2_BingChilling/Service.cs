@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Data.SqlTypes;
 using System.IO;
 using TileSpace;
 using UtilitySpace;
@@ -202,7 +204,7 @@ namespace Services
             for (int i = 0; i < count; i++) // run BFS for each treasure
             {
                 queue.Enqueue(start); // input the start tile to queue
-                start.hasVisited(); // mark the start tile as visited   
+                start.hasVisited();
                 while (queue.Count != 0)
                 {
                     Tile tile = queue.Dequeue(); // dequeue the tile
@@ -221,7 +223,7 @@ namespace Services
                         break;
                     }
 
-                    else // if the tile is not treasure
+                    else // if the tile is not active treasure
                     {
                         visit(tile, "Down"); // visit the down tile
                         visit(tile, "Right"); // visit the right tile
@@ -237,11 +239,13 @@ namespace Services
     {
         /* Attribute */
         private Stack<Tile> stack;
+        private string lastTile;
 
         /* Constructor */
         public DFS(string inputPath) : base(inputPath)
         {
             stack = new Stack<Tile>();
+            lastTile = null;
         }
 
         /* I.S : stack is not empty */
@@ -271,51 +275,79 @@ namespace Services
         {
             int count = this.treasure.Count; // count the number of treasure
 
-            //for (int i = 0; i < count; i++)
-            //{
-                stack.Push(start); // input the start tile to stack
-                start.hasVisited(); // mark the start tile as visited
-
-                // if there is still element in stack
+            for (int i = 0; i < count; i++) // run BFS for each treasure
+            {
+                stack.Push(start); // input the start tile to queue
+                start.hasVisited();
                 while (stack.Count != 0)
                 {
-                    Tile tile = stack.Pop(); // pop the tile
-                 
-                    // if The Tile is Treasure
-                    if (treasure.Contains(tile))
+                    Tile tile = stack.Pop(); // dequeue the tile
+                    //addTile2History(tile);
+                    if (treasure.Contains(tile)) // if the tile is treasure
                     {
-                        List<Tuple<string, int, int>> path = tile.getPath();
-                        treasure.Remove(tile);
+                        List<Tuple<string, int, int>> tempPath = tile.getPath(); // get the path from the tile
+                        treasure.Remove(tile); // remove the treasure from the list
 
-                        // Last Treasure
-                        if (treasure.Count == 0)
+                        if (treasure.Count == 0) // if there is no treasure left
                         {
-                            this.appendPath(path);
                             path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
-                            break;
                         }
 
-
-                     visit(tile, "Left");
-                     visit(tile, "Up");
-                     visit(tile, "Right");
-                     visit(tile, "Down");
-
-                    //this.refresh();
-                    //this.start = tile;
-                    //break;
+                        lastTile = tempPath[tempPath.Count - 1].Item1;
+                        this.appendPath(tempPath); // add the path to the path
+                        this.refresh();// refresh the tiles
+                        this.start = tile; // set the start tile to the treasure tile
+                        break;
                     }
 
-                    // if The Tile is not Treasure, visit all the adjacent
-                    else
+                    else // if the tile is not active treasure
                     {
-                        visit(tile, "Left");
-                        visit(tile, "Up");
-                        visit(tile, "Right");
-                        visit(tile, "Down");
+                        // if start is Treasure nodes, put previous nodes to the bottom of stack
+                        if (tile.getValue() == "T")
+                        {
+                            if (lastTile == "Right")
+                            {
+                                visit(tile, "Left");
+                                visit(tile, "Up");
+                                visit(tile, "Right");
+                                visit(tile, "Down");
+                            }
+
+                            if (lastTile == "Down")
+                            {
+                                visit(tile, "Up");
+                                visit(tile, "Left");
+                                visit(tile, "Right");
+                                visit(tile, "Down");
+                            }
+
+                            if(lastTile == "Left")
+                            {
+                                visit(tile, "Right");
+                                visit(tile, "Left");
+                                visit(tile, "Up");
+                                visit(tile, "Down");
+                            }
+
+                            if(lastTile == "Up")
+                            {
+                                visit(tile, "Down");
+                                visit(tile, "Left");
+                                visit(tile, "Up");
+                                visit(tile, "Right");
+                            }
+                        }
+
+                        else
+                        {
+                            visit(tile, "Left"); // visit the left tile
+                            visit(tile, "Up"); // visit the up tile
+                            visit(tile, "Right"); // visit the right tile
+                            visit(tile, "Down"); // visit the down tile
+                        }
                     }
                 }
-            //}
+            }
         }
 
     }

@@ -22,12 +22,13 @@ namespace main
             dfs.run();
             dfs.printStep();
 
-            List<Tuple<string, int, int, int>> count = dfs.getResultPath();
+            //List<Tuple<string, int, int, int>> count = dfs.getResultPath();
+            List<Tuple<int, int, int>> count = dfs.getHistoryPath();
             Console.WriteLine("mulai");
             Console.WriteLine(count.Count);
-            foreach (Tuple<string, int, int, int> tuple in count)
+            foreach (Tuple<int, int, int> tuple in count)
             {
-                Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3 + " " + tuple.Item4);
+                Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3);
             }
             Console.WriteLine("selesai");
 
@@ -41,13 +42,6 @@ namespace main
             BFS bfs = new BFS(pathFile);
             bfs.run();
             bfs.printStep();
-            List<Tuple<int, int, int>> count2 = bfs.getHistoryPath();
-            Console.WriteLine("mulai");
-            Console.WriteLine(count2.Count);
-            foreach (Tuple<int, int, int> tuple in count2)
-            {
-                Console.WriteLine(tuple.Item1 + " " + tuple.Item2 + " " + tuple.Item3);
-            }
 
             Console.WriteLine("=============");
             Console.WriteLine("   TSP BFS   ");
