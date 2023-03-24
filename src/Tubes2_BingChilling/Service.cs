@@ -164,9 +164,8 @@ namespace Services
             this.backtoHome();
             foreach(Tuple <string, int, int> tuple in this.path)
             {
-                if(tuple.Item1 == "Found" && tuple.Item2 != home.getCoordinate(0) && tuple.Item3 != home.getCoordinate(1))
+                if(tuple.Item1 == "Found" && (tuple.Item2 != home.getCoordinate(0) || tuple.Item3 != home.getCoordinate(1)))
                 {
-                    Console.WriteLine("Back to Home");
                     this.path.Remove(tuple);
                     break;
                 }

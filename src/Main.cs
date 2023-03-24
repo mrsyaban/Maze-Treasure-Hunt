@@ -12,7 +12,7 @@ namespace main
         {
 
             //Tiles tiles2 = (Tiles)tiles.Clone();
-            string pathFile = "../test/sampel-1.txt";
+            string pathFile = "../test/sampel-2.txt";
 
             Console.WriteLine("=============");
             Console.WriteLine("     DFS     ");
