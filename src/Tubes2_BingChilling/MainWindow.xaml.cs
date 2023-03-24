@@ -220,7 +220,19 @@ namespace Tubes2_BingChilling
 
                     if (i == 0)
                     {
-                        resBrush = new SolidColorBrush(Colors.Blue);
+                        if (count == 1)
+                        {
+                            resBrush = new SolidColorBrush(Colors.LightBlue);
+                        }
+                        else if (count == 2)
+                        {
+                            resBrush = new SolidColorBrush(Colors.Blue);
+                        }
+                        else
+                        {
+                            resBrush = new SolidColorBrush(Colors.DarkBlue);
+                        }
+                        
                         Grid.SetColumn(res, col);
                         Grid.SetRow(res, row);
                         res.Background = resBrush;
@@ -228,8 +240,20 @@ namespace Tubes2_BingChilling
                     }
                     else // i >= 1
                     {
-                        resBrush = new SolidColorBrush(Colors.Blue);
-                        pastBrush = new SolidColorBrush(Colors.Yellow);
+                        if (count == 1)
+                        {
+                            resBrush = new SolidColorBrush(Colors.LightBlue);
+                        }
+                        else if (count == 2)
+                        {
+                            resBrush = new SolidColorBrush(Colors.Blue);
+                        }
+                        else
+                        {
+                            resBrush = new SolidColorBrush(Colors.DarkBlue);
+                        }
+
+                        pastBrush = new SolidColorBrush(Colors.Pink);
 
                         Tuple<int, int, int> pastStep = historyPath[i - 1];
 
