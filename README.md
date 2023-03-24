@@ -36,7 +36,7 @@ Dalam menyelesaikan masalah tambahan, yakni menampilkan solusi dari masing masin
 
 ## Cara Menjalankan Program
 1. Buka folder `bin/Release/net6.0-windows` pada folder repositori
-2. Jalankan file `Tubes2_13520065.exe`
+2. Jalankan file `Tubes2_BingChilling.exe`
 
 ## Authors
 
