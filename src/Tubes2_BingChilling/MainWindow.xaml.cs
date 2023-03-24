@@ -327,6 +327,7 @@ namespace Tubes2_BingChilling
             double timeCount = stopwatch.Elapsed.TotalSeconds;
             timeBox.Text = string.Format("{0} ms",timeCount);
             // Output the route to routeBox
+            routeBox.Clear();
             for (int i = 0; i < resultPath.Count; i++)
             {
                 routeBox.Text += resultPath[i].Item1;
