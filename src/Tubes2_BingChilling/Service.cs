@@ -58,6 +58,7 @@ namespace Services
         {
             return this.pathHistory;
         }
+
         /* Method : add the tile to the path */
         public void addTile2History(Tile tile)
         {
@@ -239,13 +240,13 @@ namespace Services
     {
         /* Attribute */
         private Stack<Tile> stack;
-        private string lastTile;
+        //private string lastTile;
 
         /* Constructor */
         public DFS(string inputPath) : base(inputPath)
         {
             stack = new Stack<Tile>();
-            lastTile = null;
+            //lastTile = null;
         }
 
         /* I.S : stack is not empty */
@@ -268,6 +269,53 @@ namespace Services
             stack.Push(tile);
         }
 
+        public void visitDFS(Tile tile, string direction)
+        {
+            try
+            {
+                Tile adjTile;
+                if (direction == "Down") // if direction is down , move to the down tile
+                {
+                    adjTile = tile.getDown();
+
+                }
+                else if (direction == "Right") // if direction is right , move to the right tile
+                {
+                    adjTile = tile.getRight();
+
+                }
+                else if (direction == "Left") // if direction is left , move to the left tile
+                {
+                    adjTile = tile.getLeft();
+                }
+                else // if direction is up , move to the up tile
+                {
+                    adjTile = tile.getUp();
+                }
+
+                if (!adjTile.isVisited()) // if the tile is not visited , visit it
+                {
+                    inputTile(adjTile); // input the tile to the stack or queue
+                    adjTile.setOrigin(direction);
+                    //adjTile.hasVisited(); // mark the tile as visited
+                    //adjTile.addPath(tile, direction); // add the path to the tile
+                }
+            }
+            catch (NullReferenceException ex) // if the tile is null , do nothing
+            {
+                // do nothing
+            }
+        }
+
+        public void refreshPath()
+        {
+            foreach (Tile tile in tiles)
+            {
+                tile.resetPath();
+            }
+            stack = new Stack<Tile>();
+        }
+
         /* I.S : stack is empty */
         /* F.S : stack is not empty */
         /* Method : run DFS, find path from KrustyKrab to all treasures with DFS algorithm */
@@ -281,70 +329,119 @@ namespace Services
                 start.hasVisited();
                 while (stack.Count != 0)
                 {
+                    
+                    //Console.Write("isi stack : ");
+                    //foreach (Tile tempTile in stack)
+                    //{
+                    //    Console.Write(tempTile.getValue() + " " + tempTile.getCoordinate(0) + " " + tempTile.getCoordinate(1));
+                    //}
+                    //Console.WriteLine();
+
                     Tile tile = stack.Pop(); // dequeue the tile
-                    //addTile2History(tile);
+                    tile.hasVisited();
+                    if (tile != start)
+                    {
+                        //Console.WriteLine("masokkk");
+                        tile.addPath(tile.getTileDirect(), tile.getDirect());
+                    }
+
+                    //Console.Write("proc : " + tile.getValue() + " " + tile.getCoordinate(0) + " " + tile.getCoordinate(1));
+                    //if (tile.getOrigin() != null)
+                    //{
+                    //    Console.Write(" " + tile.getOrigin());
+                    //}
+                    //Console.WriteLine();
+
+                    addTile2History(tile);
+
                     if (treasure.Contains(tile)) // if the tile is treasure
                     {
                         List<Tuple<string, int, int>> tempPath = tile.getPath(); // get the path from the tile
                         treasure.Remove(tile); // remove the treasure from the list
 
+                        this.appendPath(tempPath); // add the path to the path
                         if (treasure.Count == 0) // if there is no treasure left
                         {
+                            Console.WriteLine("masokkk");
                             path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
                         }
 
-                        lastTile = tempPath[tempPath.Count - 1].Item1;
-                        this.appendPath(tempPath); // add the path to the path
-                        this.refresh();// refresh the tiles
+                        //lastTile = tempPath[tempPath.Count - 1].Item1;
+                        this.refreshPath();// refresh the tiles path
                         this.start = tile; // set the start tile to the treasure tile
+                        //printStep();
+                        //Console.WriteLine("============");
                         break;
                     }
 
                     else // if the tile is not active treasure
                     {
-                        // if start is Treasure nodes, put previous nodes to the bottom of stack
-                        if (tile.getValue() == "T")
+                        if (tile.getOrigin() == null)
                         {
-                            if (lastTile == "Right")
-                            {
-                                visit(tile, "Left");
-                                visit(tile, "Up");
-                                visit(tile, "Right");
-                                visit(tile, "Down");
-                            }
-
-                            if (lastTile == "Down")
-                            {
-                                visit(tile, "Up");
-                                visit(tile, "Left");
-                                visit(tile, "Right");
-                                visit(tile, "Down");
-                            }
-
-                            if(lastTile == "Left")
-                            {
-                                visit(tile, "Right");
-                                visit(tile, "Left");
-                                visit(tile, "Up");
-                                visit(tile, "Down");
-                            }
-
-                            if(lastTile == "Up")
-                            {
-                                visit(tile, "Down");
-                                visit(tile, "Left");
-                                visit(tile, "Up");
-                                visit(tile, "Right");
-                            }
-                        }
-
+                            visitDFS(tile, "Left");
+                            visitDFS(tile, "Up");
+                            visitDFS(tile, "Right");
+                            visitDFS(tile, "Down");
+                        } 
                         else
                         {
-                            visit(tile, "Left"); // visit the left tile
-                            visit(tile, "Up"); // visit the up tile
-                            visit(tile, "Right"); // visit the right tile
-                            visit(tile, "Down"); // visit the down tile
+                            if (tile.getOrigin() == "Right")
+                            {
+                                inputTile(tile.getLeft());
+                                tile.getLeft().setOrigin("Left");
+                                //tile.getLeft().setDirect("Left");
+
+                                visitDFS(tile, "Up");
+                                visitDFS(tile, "Right");
+                                visitDFS(tile, "Down");
+                            } 
+
+                            else if (tile.getOrigin() == "Down")
+                            {
+                                inputTile(tile.getUp());
+                                tile.getUp().setOrigin("Up");
+                                //tile.getUp().setDirect("Up");
+
+                                visitDFS(tile, "Left");
+                                visitDFS(tile, "Right");
+                                visitDFS(tile, "Down");
+                            }
+
+                            else if(tile.getOrigin() == "Left")
+                            {
+                                inputTile(tile.getRight());
+                                tile.getRight().setOrigin("Right");
+                                //tile.getRight().setDirect("Right");
+
+                                visitDFS(tile, "Left");
+                                visitDFS(tile, "Up");
+                                visitDFS(tile, "Down");
+                            }
+
+                            else if(tile.getOrigin() == "Up")
+                            {
+                                inputTile(tile.getDown());
+                                tile.getDown().setOrigin("Down");
+
+                                visitDFS(tile, "Left");
+                                visitDFS(tile, "Up");
+                                visitDFS(tile, "Right");
+                            }
                         }
+                        // if start is Treasure nodes, put previous nodes to the bottom of stack
+                        //if (tile.getValue() == "T")
+                        //{
+
+
+                        //}
+
+                        //else
+                        //{
+                        //    visitDFS(tile, "Left"); // visit the left tile
+                        //    visitDFS(tile, "Up"); // visit the up tile
+                        //    visitDFS(tile, "Right"); // visit the right tile
+                        //    visitDFS(tile, "Down"); // visit the down tile
+                        //}
                     }
                 }
             }

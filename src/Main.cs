@@ -12,7 +12,7 @@ namespace main
         {
 
             //Tiles tiles2 = (Tiles)tiles.Clone();
-            string pathFile = "../test/sampel-1.txt";
+            string pathFile = "../test/input.txt";
 
             Console.WriteLine("=============");
             Console.WriteLine("     DFS     ");
@@ -53,7 +53,7 @@ namespace main
 
 
             Console.WriteLine("=============");
-            Console.WriteLine("   TSP BFS   ");
+            Console.WriteLine("   TSP DFS   ");
             Console.WriteLine("=============");
 
             DFS dfs_tsp = new DFS(pathFile);
