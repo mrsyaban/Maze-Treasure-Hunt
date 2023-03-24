@@ -45,7 +45,7 @@ Dalam menyelesaikan masalah tambahan, yakni menampilkan solusi dari masing masin
 3. Run program dengan menggunakan tombol Run pada Visual Studio 2022
 
 ## Cara Menjalankan Program
-1. Buka folder `bin/debug` pada folder repositori
+1. Buka folder `src/Tubes2_BingChilling/obj/Debug` pada folder repositori
 2. Jalankan file `Tubes2_BingChilling.exe`
 
 ## Authors
@@ -54,7 +54,7 @@ Dalam menyelesaikan masalah tambahan, yakni menampilkan solusi dari masing masin
 |----------|-----------------------------|
 | 13521080 | Fajar Maulana H             |
 | 13521119 | Muhammad Rizky Sya’ban      |
-| 13520152 | Muhammad Naufal Nalendra    |
+| 13521152 | Muhammad Naufal Nalendra    |
 
 ## Link Demo Program
 * [Tugas Besar II IF2211 Strategi Algoritma tahun 2021/2022](bit.ly/BonusVideoTubesStima2)
