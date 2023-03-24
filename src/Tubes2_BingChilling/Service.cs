@@ -202,7 +202,7 @@ namespace Services
             for (int i = 0; i < count; i++) // run BFS for each treasure
             {
                 queue.Enqueue(start); // input the start tile to queue
-                start.hasVisited(); // mark the start tile as visited
+                start.hasVisited(); // mark the start tile as visited   
                 while (queue.Count != 0)
                 {
                     Tile tile = queue.Dequeue(); // dequeue the tile
