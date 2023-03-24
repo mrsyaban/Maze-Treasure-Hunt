@@ -144,6 +144,7 @@ namespace Tubes2_BingChilling
             // Set up variables and objects
             int nodes = 0;
             List<Tuple<string, int, int, int>> resultPath;
+            List<Tuple<int, int, int>> historyPath;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -155,6 +156,7 @@ namespace Tubes2_BingChilling
                 // Execute the search algorithm on a separate thread using Task.Run()
                 await Task.Run(() => bfs.runTSP());
                 resultPath = bfs.getResultPath();
+                historyPath = bfs.getHistoryPath();
 
             }
             else if (dfsButton.IsChecked == true && tspButton.IsChecked == true)
@@ -164,6 +166,7 @@ namespace Tubes2_BingChilling
                 // Execute the search algorithm on a separate thread using Task.Run()
                 await Task.Run(() => dfs.runTSP());
                 resultPath = dfs.getResultPath();
+                historyPath = dfs.getHistoryPath();
 
             }
             else if (bfsButton.IsChecked == true)
@@ -173,6 +176,7 @@ namespace Tubes2_BingChilling
                 // Execute the search algorithm on a separate thread using Task.Run()
                 await Task.Run(() => bfs.run());
                 resultPath = bfs.getResultPath();
+                historyPath = bfs.getHistoryPath();
 
             }
             else if (dfsButton.IsChecked == true)
@@ -183,6 +187,7 @@ namespace Tubes2_BingChilling
                 // Execute the search algorithm on a separate thread using Task.Run()
                 await Task.Run(() => dfs.run());
                 resultPath = dfs.getResultPath();
+                historyPath = dfs.getHistoryPath();
                 
             }
             else
@@ -192,11 +197,65 @@ namespace Tubes2_BingChilling
                 List<Tuple<string, int, int, int>> emptyList = new List<Tuple<string, int, int, int>>();
                 emptyList.Add(emptyPath);
                 resultPath = emptyList;
+                historyPath = new List<Tuple<int, int, int>>();
             }
+            // Visualize the searching
+            for (int i = 0; i < historyPath.Count; i++)
+            {
+                await Task.Delay(300); // introduce a 0.5 second delay between each step
+
+                Tuple<int, int, int> currentStep = historyPath[i];
+
+                // Update the UI
+                Dispatcher.Invoke(() =>
+                {
+                    int row = currentStep.Item2;
+                    int col = currentStep.Item3;
+                    int count = currentStep.Item1;
+
+                TextBox res = new TextBox();
+                TextBox past = new TextBox();
+                SolidColorBrush resBrush;
+                SolidColorBrush pastBrush;
+
+                    if (i == 0)
+                    {
+                        resBrush = new SolidColorBrush(Colors.Blue);
+                        Grid.SetColumn(res, col);
+                        Grid.SetRow(res, row);
+                        res.Background = resBrush;
+                        mazeGrid.Children.Add(res);
+                    }
+                    else // i >= 1
+                    {
+                        resBrush = new SolidColorBrush(Colors.Blue);
+                        pastBrush = new SolidColorBrush(Colors.Red);
+
+                        Grid.SetColumn(res, col);
+                        Grid.SetRow(res, row);
+
+                        Tuple<int, int, int> pastStep = historyPath[i - 1];
+
+                        int pastRow = pastStep.Item2;
+                        int pastCol = pastStep.Item3;
+
+                        Grid.SetColumn(res, pastCol);
+                        Grid.SetRow(res, pastRow);
+
+                        past.Background = pastBrush;
+                        res.Background = resBrush;
+
+                        mazeGrid.Children.Add(past);
+                        mazeGrid.Children.Add(res);
+                    }
+                });
+            }
+
+
             // Visualize the grid step by step 
             for (int i = 0; i < resultPath.Count; i++)
             {
-                await Task.Delay(500); // introduce a 0.5 second delay between each step
+                await Task.Delay(300); // introduce a 0.5 second delay between each step
 
                 Tuple<string, int, int, int> currentStep = resultPath[i];
 
@@ -250,7 +309,7 @@ namespace Tubes2_BingChilling
                 routeBox.Text += resultPath[i].ToString();
             }
             // Output the number of steps
-            stepsBox.Text = "";
+            stepsBox.Text = historyPath.Count.ToString();
             // Output the number of nodes;
             nodesBox.Text = resultPath.Count.ToString();
         }
