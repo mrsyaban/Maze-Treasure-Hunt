@@ -239,6 +239,8 @@ namespace Tubes2_BingChilling
             }
             // Stop the Stopwatch
             stopwatch.Stop();
+
+            stepSlider.ValueChanged += StepSlider_ValueChanged;
             // convert time into double
             double timeCount = stopwatch.Elapsed.TotalSeconds;
             timeBox.Text = string.Format("{0} ms",timeCount);
@@ -252,38 +254,93 @@ namespace Tubes2_BingChilling
             // Output the number of nodes;
             nodesBox.Text = resultPath.Count.ToString();
         }
-
-
-
-        private void showProgress(object sender, RoutedEventArgs e)
+        private async void StepSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            // Create a new BackgroundWorker object and set its properties
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = true;
-
-            // Set the event handlers for the worker's events
-            worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
-
-            // Start the worker
-            worker.RunWorkerAsync();
-        }
-        private void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            for (int i = 1; i <= 100; i++)
+            List<Tuple<int, int, int>> resultPath;
+            if (bfsButton.IsChecked == true && tspButton.IsChecked == true)
             {
-                // Simulate work by sleeping for 50 milliseconds
-                System.Threading.Thread.Sleep(50);
+                BFS bfs = new BFS(this.pathFile);
 
-                // Report progress to the UI thread
-                (sender as BackgroundWorker).ReportProgress(i);
+                // Execute the search algorithm on a separate thread using Task.Run()
+                await Task.Run(() => bfs.runTSP());
+                resultPath = bfs.getHistoryPath();
+
             }
-        }
+            else if (dfsButton.IsChecked == true && tspButton.IsChecked == true)
+            {
+                DFS dfs = new DFS(this.pathFile);
 
-        private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            // Update the progress bar value with the progress reported by the worker
-            progress.Value = e.ProgressPercentage;
+                // Execute the search algorithm on a separate thread using Task.Run()
+                await Task.Run(() => dfs.runTSP());
+                resultPath = dfs.getHistoryPath();
+
+            }
+            else if (bfsButton.IsChecked == true)
+            {
+                BFS bfs = new BFS(this.pathFile);
+
+                // Execute the search algorithm on a separate thread using Task.Run()
+                await Task.Run(() => bfs.run());
+                resultPath = bfs.getHistoryPath();
+
+            }
+            else if (dfsButton.IsChecked == true)
+            {
+                // Similar code as above for DFS algorithm
+                DFS dfs = new DFS(this.pathFile);
+
+                // Execute the search algorithm on a separate thread using Task.Run()
+                await Task.Run(() => dfs.run());
+                resultPath = dfs.getHistoryPath();
+
+            }
+            else
+            {
+                MessageBox.Show("Please select a desired algorithm ", "No algorithm is selected", MessageBoxButton.OK, MessageBoxImage.Error);
+                Tuple<int, int, int> emptyPath = Tuple.Create(0, 0, 0);
+                List<Tuple<int, int, int>> emptyList = new List<Tuple<int, int, int>>();
+                emptyList.Add(emptyPath);
+                resultPath = emptyList;
+            }
+            int step = (int)e.NewValue;
+            int maxStep = (int)(resultPath.Count - 1) * (int)(e.NewValue / stepSlider.Maximum);
+
+            if (step >= 0 && step <= maxStep)
+            {
+
+                for (int i = 0; i <= maxStep; i++)
+                {
+                    int currentStepIndex = (int)((double)i / maxStep * (resultPath.Count - 1));
+                    Tuple<int, int, int> currentStep = resultPath[i / (((int)stepSlider.TickFrequency))];
+
+                    int row = currentStep.Item2;
+                    int col = currentStep.Item3;
+
+                    TextBox res = new TextBox();
+                    TextBox past = new TextBox();
+                    SolidColorBrush resBrush;
+                    SolidColorBrush pastBrush;
+
+                    if (currentStepIndex == 0)
+                    {
+                        resBrush = new SolidColorBrush(Colors.Blue);
+                        Grid.SetColumn(res, col);
+                        Grid.SetRow(res, row);
+                        res.Background = resBrush;
+                        mazeGrid.Children.Add(res);
+                    }
+                    else
+                    {
+                        resBrush = new SolidColorBrush(Colors.Yellow);
+                        Grid.SetColumn(res, col);
+                        Grid.SetRow(res, row);
+                        res.Background = resBrush;
+                        mazeGrid.Children.Add(res);
+                    }
+
+
+                }
+            }
         }
 
     }
