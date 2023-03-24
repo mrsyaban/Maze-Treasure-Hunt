@@ -1,5 +1,4 @@
-X T X X
-X R R T
-K R X T
-X R X R
-X R R R
+R R K R T R R R
+X R X T R X X T
+X T X R X T X R
+X R X R T R R T

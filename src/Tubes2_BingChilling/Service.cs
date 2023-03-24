@@ -267,6 +267,29 @@ namespace Services
         {
             stack.Push(tile);
         }
+        public bool cekBackTrack(Tile tile){
+            try
+            {
+                bool backtrack = true;
+                if(!tile.getDown().isVisited()){
+                    backtrack = false;
+                }
+                else if(!tile.getRight().isVisited()){
+                    backtrack = false;
+                }
+                else if(!tile.getUp().isVisited()){
+                    backtrack = false;
+                }
+                else if(!tile.getLeft().isVisited()){
+                    backtrack = false;
+                }
+                return backtrack;
+            }
+            catch (NullReferenceException ex) // if the tile is null , do nothing
+            {
+                // do nothing
+            }
+        }
 
         /* I.S : stack is empty */
         /* F.S : stack is not empty */
@@ -275,79 +298,102 @@ namespace Services
         {
             int count = this.treasure.Count; // count the number of treasure
 
-            for (int i = 0; i < count; i++) // run BFS for each treasure
-            {
-                stack.Push(start); // input the start tile to queue
+            // for (int i = 0; i < count; i++) // run DFS for each treasure
+            // {
+                stack.Push(start); // input the start tile to stack
                 start.hasVisited();
                 while (stack.Count != 0)
                 {
-                    Tile tile = stack.Pop(); // dequeue the tile
-                    //addTile2History(tile);
+                    Tile tile = stack.Pop(); // pop the tile
+                    addTile2History(tile);
                     if (treasure.Contains(tile)) // if the tile is treasure
                     {
-                        List<Tuple<string, int, int>> tempPath = tile.getPath(); // get the path from the tile
                         treasure.Remove(tile); // remove the treasure from the list
 
+                        List<Tuple<string, int, int>> tempPath = tile.getPath(); // get the path from the tile
                         if (treasure.Count == 0) // if there is no treasure left
                         {
-                            path.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
-                        }
-
-                        lastTile = tempPath[tempPath.Count - 1].Item1;
-                        this.appendPath(tempPath); // add the path to the path
-                        this.refresh();// refresh the tiles
-                        this.start = tile; // set the start tile to the treasure tile
-                        break;
-                    }
-
-                    else // if the tile is not active treasure
-                    {
-                        // if start is Treasure nodes, put previous nodes to the bottom of stack
-                        if (tile.getValue() == "T")
-                        {
-                            if (lastTile == "Right")
-                            {
-                                visit(tile, "Left");
-                                visit(tile, "Up");
-                                visit(tile, "Right");
-                                visit(tile, "Down");
+                            tempPath.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
+                            this.appendPath(tempPath); // add the path to the path
+                            break;
+                        }else{
+                            if(cekBackTrack(tile)){
+                                tempPath.Add(new Tuple<string, int, int>("Found", tile.getCoordinate(0), tile.getCoordinate(1)));
+                                this.appendPath(tempPath); // add the path to the path
+                                this.refresh(); // refresh the tiles
+                                this.start = tile; // set the start tile to the treasure tile
+                                break;
                             }
-
-                            if (lastTile == "Down")
-                            {
-                                visit(tile, "Up");
-                                visit(tile, "Left");
-                                visit(tile, "Right");
-                                visit(tile, "Down");
-                            }
-
-                            if(lastTile == "Left")
-                            {
-                                visit(tile, "Right");
-                                visit(tile, "Left");
-                                visit(tile, "Up");
-                                visit(tile, "Down");
-                            }
-
-                            if(lastTile == "Up")
-                            {
-                                visit(tile, "Down");
-                                visit(tile, "Left");
-                                visit(tile, "Up");
-                                visit(tile, "Right");
-                            }
-                        }
-
-                        else
-                        {
                             visit(tile, "Left"); // visit the left tile
                             visit(tile, "Up"); // visit the up tile
                             visit(tile, "Right"); // visit the right tile
                             visit(tile, "Down"); // visit the down tile
                         }
+
+                        // lastTile = tempPath[tempPath.Count - 1].Item1;
+                        // Tuple <string, int, int> prevTile = tempPath[tempPath.Count - 1];
+
+                        // this.refresh();// refresh the tiles
+                        // foreach(Tile t in tiles)
+                        // {
+                        //     if (t.getCoordinate(0) == prevTile.Item2 && t.getCoordinate(1) == prevTile.Item3)
+                        //     {
+                        //         t.hasVisited();
+                        //         break;
+                        //     }
+                        // }
+                        // this.start = tile; // set the start tile to the treasure tile
+                        // break;
+                    }
+
+                    else // if the tile is not active treasure
+                    {
+                        // if start is Treasure nodes, put previous nodes to the bottom of stack
+                        // if (tile.getValue() == "T")
+                        // {
+                        //     if (lastTile == "Right")
+                        //     {
+                        //         visit(tile, "Left");
+                        //         visit(tile, "Up");
+                        //         visit(tile, "Right");
+                        //         visit(tile, "Down");
+                        //     }
+
+                        //     if (lastTile == "Down")
+                        //     {
+                        //         visit(tile, "Up");
+                        //         visit(tile, "Left");
+                        //         visit(tile, "Right");
+                        //         visit(tile, "Down");
+                        //     }
+
+                        //     if(lastTile == "Left")
+                        //     {
+                        //         visit(tile, "Right");
+                        //         visit(tile, "Left");
+                        //         visit(tile, "Up");
+                        //         visit(tile, "Down");
+                        //     }
+
+                        //     if(lastTile == "Up")
+                        //     {
+                        //         visit(tile, "Down");
+                        //         visit(tile, "Left");
+                        //         visit(tile, "Up");
+                        //         visit(tile, "Right");
+                        //     }
+                        // }
+
+                        // else
+                        // {
+                            visit(tile, "Left"); // visit the left tile
+                            visit(tile, "Up"); // visit the up tile
+                            visit(tile, "Right"); // visit the right tile
+                            visit(tile, "Down"); // visit the down tile
+                        // }
                     }
                 }
-            }
+            // }
         }
 
     }

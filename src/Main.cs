@@ -53,7 +53,7 @@ namespace main
 
 
             Console.WriteLine("=============");
-            Console.WriteLine("   TSP BFS   ");
+            Console.WriteLine("   TSP DFS   ");
             Console.WriteLine("=============");
 
             DFS dfs_tsp = new DFS(pathFile);
