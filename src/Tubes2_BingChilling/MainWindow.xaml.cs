@@ -327,15 +327,16 @@ namespace Tubes2_BingChilling
             double timeCount = stopwatch.Elapsed.TotalSeconds;
             timeBox.Text = string.Format("{0} ms",timeCount);
             // Output the route to routeBox
+            routeBox.Clear();
             for (int i = 0; i < resultPath.Count; i++)
             {
                 routeBox.Text += resultPath[i].Item1;
                 routeBox.Text += "-";
             }
             // Output the number of steps
-            stepsBox.Text = historyPath.Count.ToString();
+            stepsBox.Text = resultPath.Count.ToString();
             // Output the number of nodes;
-            nodesBox.Text = resultPath.Count.ToString();
+            nodesBox.Text = historyPath.Count.ToString();
         }
         private async void StepSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
