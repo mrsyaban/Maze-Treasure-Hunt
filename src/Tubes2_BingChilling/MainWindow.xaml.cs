@@ -213,10 +213,10 @@ namespace Tubes2_BingChilling
                     int col = currentStep.Item3;
                     int count = currentStep.Item1;
 
-                TextBox res = new TextBox();
-                TextBox past = new TextBox();
-                SolidColorBrush resBrush;
-                SolidColorBrush pastBrush;
+                    TextBox res = new TextBox();
+                    TextBox past = new TextBox();
+                    SolidColorBrush resBrush;
+                    SolidColorBrush pastBrush;
 
                     if (i == 0)
                     {
@@ -229,27 +229,26 @@ namespace Tubes2_BingChilling
                     else // i >= 1
                     {
                         resBrush = new SolidColorBrush(Colors.Blue);
-                        pastBrush = new SolidColorBrush(Colors.Red);
-
-                        Grid.SetColumn(res, col);
-                        Grid.SetRow(res, row);
+                        pastBrush = new SolidColorBrush(Colors.Yellow);
 
                         Tuple<int, int, int> pastStep = historyPath[i - 1];
 
                         int pastRow = pastStep.Item2;
                         int pastCol = pastStep.Item3;
 
-                        Grid.SetColumn(res, pastCol);
-                        Grid.SetRow(res, pastRow);
-
+                        Grid.SetColumn(past, pastCol);
+                        Grid.SetRow(past, pastRow);
                         past.Background = pastBrush;
-                        res.Background = resBrush;
-
                         mazeGrid.Children.Add(past);
+
+                        Grid.SetColumn(res, col);
+                        Grid.SetRow(res, row);
+                        res.Background = resBrush;
                         mazeGrid.Children.Add(res);
                     }
                 });
             }
+
 
 
             // Visualize the grid step by step 
