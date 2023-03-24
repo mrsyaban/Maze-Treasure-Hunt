@@ -35,7 +35,7 @@ Dalam menyelesaikan masalah tambahan, yakni menampilkan solusi dari masing masin
 3. Run program dengan menggunakan tombol Run pada Visual Studio 2022
 
 ## Cara Menjalankan Program
-1. Buka folder `obj/debug` pada folder repositori
+1. Buka folder `bin/debug` pada folder repositori
 2. Jalankan file `Tubes2_BingChilling.exe`
 
 ## Authors
