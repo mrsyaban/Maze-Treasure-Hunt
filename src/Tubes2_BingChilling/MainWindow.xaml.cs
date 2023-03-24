@@ -333,9 +333,9 @@ namespace Tubes2_BingChilling
                 routeBox.Text += "-";
             }
             // Output the number of steps
-            stepsBox.Text = historyPath.Count.ToString();
+            stepsBox.Text = resultPath.Count.ToString();
             // Output the number of nodes;
-            nodesBox.Text = resultPath.Count.ToString();
+            nodesBox.Text = historyPath.Count.ToString();
         }
         private async void StepSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
